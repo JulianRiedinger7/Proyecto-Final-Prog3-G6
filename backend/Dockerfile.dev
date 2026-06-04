@@ -4,6 +4,9 @@ FROM node:18-alpine
 # Instalar herramientas para desarrollo
 RUN apk add --no-cache git
 
+ENV PNPM_HOME=/usr/local/bin
+RUN npm install -g pnpm
+
 WORKDIR /app
 
 # Variables de entorno para desarrollo
@@ -13,10 +16,7 @@ ENV NODE_ENV=development
 COPY package*.json ./
 
 # Instalar dependencias incluyendo devDependencies
-RUN npm install
-
-# Instalar nodemon globalmente si no está en package.json
-RUN npm install -g nodemon
+RUN pnpm install
 
 # Copiar código fuente
 COPY . .
@@ -25,4 +25,4 @@ COPY . .
 EXPOSE 3001 9229
 
 # Comando con nodemon para hot reload
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]

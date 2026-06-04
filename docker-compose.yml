@@ -1,5 +1,5 @@
 # docker-compose.yml con hot reload optimizado
-version: '3.8'
+version: "3.8"
 
 services:
   # Base de datos PostgreSQL
@@ -8,9 +8,9 @@ services:
     container_name: app_database
     restart: unless-stopped
     environment:
-      POSTGRES_DB: app_database
-      POSTGRES_USER: app_user
-      POSTGRES_PASSWORD: app_password
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
@@ -32,18 +32,18 @@ services:
     container_name: app_backend
     restart: unless-stopped
     environment:
-      NODE_ENV: development
-      PORT: 3001
-      DB_HOST: database
-      DB_PORT: 5432
-      DB_NAME: app_database
-      DB_USER: app_user
-      DB_PASSWORD: app_password
-      JWT_SECRET: your_jwt_secret_here
-      CORS_ORIGIN: http://localhost:3000
+      NODE_ENV: ${NODE_ENV}
+      PORT: ${PORT}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      CORS_ORIGIN: ${CORS_ORIGIN}
     ports:
       - "3001:3001"
-      - "9229:9229"  # Puerto para debugging
+      - "9229:9229" # Puerto para debugging
     volumes:
       - ./backend:/app
       - /app/node_modules
@@ -55,61 +55,61 @@ services:
       - app_network
 
   # Frontend con React y Hot Reload
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.dev
-    container_name: app_frontend
-    restart: unless-stopped
-    environment:
-      - REACT_APP_API_URL=http://localhost:3001/api
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
-      - FAST_REFRESH=true
-      - WDS_SOCKET_HOST=localhost
-      - WDS_SOCKET_PORT=3000
-      - WDS_SOCKET_PATH=/ws
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - frontend_node_modules:/app/node_modules
-    depends_on:
-      - backend
-    networks:
-      - app_network
-    stdin_open: true
-    tty: true
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile.dev
+  #   container_name: app_frontend
+  #   restart: unless-stopped
+  #   environment:
+  #     - REACT_APP_API_URL=http://localhost:3001/api
+  #     - CHOKIDAR_USEPOLLING=true
+  #     - WATCHPACK_POLLING=true
+  #     - FAST_REFRESH=true
+  #     - WDS_SOCKET_HOST=localhost
+  #     - WDS_SOCKET_PORT=3000
+  #     - WDS_SOCKET_PATH=/ws
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #     - frontend_node_modules:/app/node_modules
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - app_network
+  #   stdin_open: true
+  #   tty: true
 
-  # Caddy como reverse proxy
-  caddy:
-    image: caddy:2-alpine
-    container_name: app_caddy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-    depends_on:
-      - frontend
-      - backend
-    networks:
-      - app_network
+  # # Caddy como reverse proxy
+  # caddy:
+  #   image: caddy:2-alpine
+  #   container_name: app_caddy
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+  #     - caddy_data:/data
+  #   depends_on:
+  #     - frontend
+  #     - backend
+  #   networks:
+  #     - app_network
 
-  # Redis para cache y sesiones (opcional)
-  redis:
-    image: redis:7-alpine
-    container_name: app_redis
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    networks:
-      - app_network
-    command: redis-server --appendonly yes
+  # # Redis para cache y sesiones (opcional)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: app_redis
+  #   restart: unless-stopped
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   networks:
+  #     - app_network
+  #   command: redis-server --appendonly yes
 
   # pgAdmin 4 para administración de PostgreSQL
   pgadmin:
@@ -119,10 +119,10 @@ services:
     container_name: app_pgadmin
     restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: 'False'
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: ${PGADMIN_CONFIG_SERVER_MODE}
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: ${PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED}
     ports:
       - "5050:80"
     volumes:
@@ -134,11 +134,11 @@ services:
 
 volumes:
   postgres_data:
-  redis_data:
-  frontend_node_modules:
+  #redis_data:
+  #frontend_node_modules:
   backend_node_modules:
   pgadmin_data:
-  caddy_data:
+  #caddy_data:
 
 networks:
   app_network:

@@ -4,7 +4,8 @@ WORKDIR /app
 
 # Instalar dependencias
 COPY package*.json ./
-RUN npm install
+RUN npm install -g pnpm
+RUN pnpm install
 
 # Copiar código fuente
 COPY . .
@@ -13,4 +14,4 @@ COPY . .
 EXPOSE 3001
 
 # Comando por defecto
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "run", "dev"]
