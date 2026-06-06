@@ -17,6 +17,8 @@ COPY package*.json ./
 
 # Instalar dependencias incluyendo devDependencies
 RUN pnpm install
+RUN pnpm install --save-dev @types/node @types/validator
+RUN pnpm add reflect-metadata@0.1.14 
 
 # Copiar código fuente
 COPY . .

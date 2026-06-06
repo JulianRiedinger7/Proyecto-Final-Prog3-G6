@@ -1,12 +1,21 @@
-const express = require("express");
+import "reflect-metadata";
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import dotenv from "dotenv";
+import { sequelize } from "../models";   // descomentá cuando esté listo
+import routes from "../routes";
+/*const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const morgan = require("morgan");
-const errorHandler = require("./middleware/error-handler.middleware");
-require("dotenv").config();
+const morgan = require("morgan");*/
+const errorHandler = require("../middleware/error-handler.middleware");
+//require("dotenv").config();
 
-const { sequelize } = require("./models");
-const routes = require("./routes");
+/*const { sequelize } = require("../models");
+const routes = require("../routes");*/
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -52,7 +61,7 @@ app.use("*", (req, res) => {
 app.use(errorHandler);
 
 // Inicializar servidor
-async function startServer() {
+export async function startServer() {
   try {
     // Probar conexión a la base de datos
     await sequelize.authenticate();
@@ -77,8 +86,6 @@ async function startServer() {
     });
   }
 }
-
-startServer();
 
 // Manejo de cierre graceful
 process.on("SIGTERM", async () => {
