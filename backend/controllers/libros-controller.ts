@@ -82,4 +82,24 @@ export class LibrosController {
         }
         return res.status(codigo).json(salida);
     }
+
+    public getPortada = async (req:Request, res:Response): Promise<Response> => {
+        let codigo: number;
+        let salida: object | null;
+        let portadaTemp: string | undefined;
+
+        try {
+            codigo = 200;
+            portadaTemp = await Libro.getPortada(Number(req.params.id));
+            if (portadaTemp) {                
+                salida = { portada: `https://covers.openlibrary.org/b/olid/${portadaTemp}M.jpg` };
+            } else {
+                throw Error;
+            }
+        } catch (error) {
+            codigo = 404;
+            salida = { msg: error };
+        }
+        return res.status(codigo).json(salida);
+    }
 }

@@ -87,5 +87,9 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
         return await Libro.count();
     }
 
+    static async getPortada(id:number):Promise<string | undefined> {
+        return (await Libro.findByPk(id, { attributes: ['portada'], raw: true})
+                                                                    )?.portada;
+    }
 
 }
