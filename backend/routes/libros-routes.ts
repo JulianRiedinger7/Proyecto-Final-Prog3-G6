@@ -18,6 +18,7 @@ export class LibrosRouter {
         this.router.post('/', libroC.postLibro);
         this.router.put('/:id', libroC.putLibro);
         this.router.delete('/:id', libroC.borrarLibro);
+        this.router.get('/portada/:id', libroC.getPortada);
     }
 
     public getRouter(): Router {
