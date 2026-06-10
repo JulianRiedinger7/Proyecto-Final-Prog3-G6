@@ -1,4 +1,3 @@
-import { verificarToken } from "../middleware/auth";
 import { LibrosController } from "../controllers/libros-controller";
 import {EstadoLibroController} from "../controllers/estado-libro-controller";
 import express, { Router } from 'express';
