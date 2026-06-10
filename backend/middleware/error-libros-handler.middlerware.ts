@@ -10,5 +10,6 @@ export class ErrorLibros {
                 error: err.message
             });
         }        
+        next(err);
     }
 }
