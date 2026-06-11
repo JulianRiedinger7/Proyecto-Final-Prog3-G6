@@ -1,16 +1,20 @@
-import "reflect-metadata"
-import express from "express"
-import cors from "cors"
-import helmet from "helmet"
-import morgan from "morgan"
-import dotenv from "dotenv"
-import { sequelize } from "../models"
-import routes from "../routes"
-import errorHandler from "../middleware/error-handler.middleware"
+import "reflect-metadata";
+import express, { Application } from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+import dotenv from "dotenv";
+import { sequelize } from "../models";
+import errorHandler from "../middleware/error-handler.middleware";
+import Enrutador from "../routes/index-routes";
+import { ErrorLibros } from "../middleware/error-libros-handler.middlerware";
+//import { LibroSeeder } from "../seeders/20260606-seeder-libro";
 
 
 //Clase Servidor 
 export class Servidor {
+  private app: Application;
+  private port: string; 
   /*Metodo Constructor que mediante el metodo dotenv vuelca los datos de las
   variables de entorno del archivo .env en el process.env, luego genera una 
   instancia de express en el atributo app, guarda el puerto en el port y va 
@@ -20,7 +24,7 @@ export class Servidor {
   public constructor () {
     dotenv.config();
     this.app =  express();
-    this.port = process.env.PORT || 3001;
+    this.port = process.env.PORT || '3001';
     this.middleware()
     this.rutas()
     this.errores()
@@ -29,10 +33,10 @@ export class Servidor {
 
   private middleware() {
     this.app.use(helmet())
-    this.app.use(cors(cors({
+    this.app.use(cors({
       origin: process.env.CORS_ORIGIN || "http://localhost:3000",
       credentials: true,
-    }),))
+    }))
     this.app.use(express.json({ limit: "10mb" }));
     this.app.use(express.urlencoded({ extended: true }));
     // Logging
@@ -42,7 +46,8 @@ export class Servidor {
   }
 
   private rutas() {
-    this.app.use("/api", routes);
+    const enrutador = new Enrutador();
+    this.app.use("/api", enrutador.getRoutes());
     // Health check en la raíz
     this.app.get("/health", (req, res) => {
                   res.status(200).json({
@@ -58,6 +63,7 @@ export class Servidor {
   }
 
   private errores() {
+    this.app.use(ErrorLibros.manejadorErrores);
     this.app.use(errorHandler);
   }
 
@@ -73,6 +79,8 @@ export class Servidor {
       if (process.env.NODE_ENV === "development") {
         await sequelize.sync({ alter: false });
         console.log("✅ Database synchronized");
+        const { LibroSeeder } = require('../seeders/20260606-seeder-libro');
+        await LibroSeeder.generarSeed();
       }
 
       this.app.listen(this.port, () => {

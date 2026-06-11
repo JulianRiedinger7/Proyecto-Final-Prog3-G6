@@ -1,13 +1,12 @@
-// backend/config/database.js
-require('dotenv').config();
+import { DatabaseConfig } from '../interfaces/dbConfig-interface';
 
-module.exports = {
+const config: DatabaseConfig = {
   development: {
     username: process.env.DB_USER || 'app_user',
     password: process.env.DB_PASSWORD || 'app_password',
     database: process.env.DB_NAME || 'app_database',
     host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 5432,
+    port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
     dialect: 'postgres',
     logging: console.log,
     pool: {
@@ -22,16 +21,16 @@ module.exports = {
     password: process.env.DB_PASSWORD || 'app_password',
     database: process.env.DB_NAME + '_test' || 'app_database_test',
     host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 5432,
+    port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
     dialect: 'postgres',
     logging: false
   },
   production: {
-    username: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
+    username: process.env.DB_USER || 'app_user',
+    password: process.env.DB_PASSWORD || 'app_password',
+    database: process.env.DB_NAME || 'app_database',
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
     dialect: 'postgres',
     logging: false,
     pool: {
@@ -48,3 +47,5 @@ module.exports = {
     }
   }
 };
+
+export default config;

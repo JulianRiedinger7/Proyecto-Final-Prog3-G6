@@ -13,3 +13,10 @@ export interface InterfaceLibro {
     generoId?: number,
     usuarioId?: number
 }
+
+export interface ActualizarReseña{
+    resenia?: string}
+
+export interface IActualizarEstado {
+    estado: EstadoLectura;
+}
