@@ -26,7 +26,6 @@ Documentación Postman:
   2. dbConfig-interface
 * Modelo Libro
 * Manejador de Errores: error-libros-handler.middlerware.ts
-* Migracion Libro
 * Seeder Libro
 * Controlador Libro con los siguientes endpoints:
   1. GET /api/libros
@@ -247,17 +246,13 @@ proyecto/
 │   ├── routes/
 │   │   ├── index-routes.ts          # Router principal
 │   │   └── libros-routes.ts         # Rutas relacionada a los manejadores estado-libro y libros-controller
-│   ├── migrations/                  # Migraciones de base de datos
-|   |   └── 20260605-crear-libro.ts  # Migracion de la base de datos Libro
 │   ├── seeders/                     # Datos de prueba
 |   |   └── 20260606-seeder-libro.ts # Seeder para completar la tabla Libro
 │   ├── core/                     # Contenedor del Core de la API
 |   |   └── server.ts             
-│   ├── interfaces/
-│   │   ├── dbConfig-interface.ts    # Interface de la configuracion a la Base de datos
-│   │   └── Libro-interface.ts       # Interfaz del Modelo Libro
-│   ├── tests/                       # Tests
-│   └── utils/                       # Funciones auxiliares
+│   └── interfaces/
+│       ├── dbConfig-interface.ts    # Interface de la configuracion a la Base de datos
+│       └── Libro-interface.ts       # Interfaz del Modelo Libro
 │
 └── frontend/
     └── TODO
