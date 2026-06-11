@@ -42,7 +42,8 @@ export class CategoriasController {
     next: NextFunction,
   ): Promise<Response | void> => {
     try {
-      const nuevaCategoria: ICategoria = await Categoria.crear(req.body);
+      const { nombre } = req.body;
+      const nuevaCategoria: ICategoria = await Categoria.crear({ nombre });
       return res.status(201).json(nuevaCategoria);
     } catch (error) {
       next(error);
@@ -62,7 +63,10 @@ export class CategoriasController {
           .status(404)
           .json({ msg: `No se encontró la categoría con ID ${id} para eliminar` });
       }
-      return res.status(200).json({ msg: `Categoría con ID ${id} eliminada exitosamente` });
+      return res.status(200).json({
+        msg: `Categoría con ID ${id} eliminada exitosamente`,
+        categoria: categoriaEliminada,
+      });
     } catch (error) {
       next(error);
     }

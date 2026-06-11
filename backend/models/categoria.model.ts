@@ -1,5 +1,13 @@
 import { ICategoria } from "../interfaces/categoria.interface";
-import { Table, Column, Model, PrimaryKey, AutoIncrement, AllowNull } from "sequelize-typescript";
+import {
+  Table,
+  Column,
+  Model,
+  PrimaryKey,
+  AutoIncrement,
+  AllowNull,
+  Validate,
+} from "sequelize-typescript";
 import { DataTypes } from "sequelize";
 
 @Table({
@@ -13,6 +21,11 @@ export class Categoria extends Model<ICategoria> implements ICategoria {
   id?: number;
 
   @AllowNull(false)
+  @Validate({
+    notEmpty: {
+      msg: "El nombre de la categoría no puede estar vacío",
+    },
+  })
   @Column(DataTypes.STRING)
   nombre!: string;
 
