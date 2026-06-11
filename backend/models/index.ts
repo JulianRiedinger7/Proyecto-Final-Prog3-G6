@@ -48,5 +48,4 @@ class Index {
 const db = Index.getInstance();
 export const { sequelize } = db;
 export { Sequelize, Libro};
-export {Sequelize, Usuario}
 export default db;

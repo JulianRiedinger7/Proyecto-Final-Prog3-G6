@@ -1,5 +1,5 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, AllowNull } from 'sequelize-typescript';
-
+import { DataType } from 'sequelize-typescript';
 
 @Table({
     tableName: 'usuarios',
@@ -10,20 +10,20 @@ import { Table, Column, Model, PrimaryKey, AutoIncrement, AllowNull } from 'sequ
 export class Usuario extends Model {
     @PrimaryKey
     @AutoIncrement
-    @Column(DataTypes.INTEGER)
+    @Column(DataType.INTEGER)
     id?: number;
 
     @AllowNull(false)
-    @Column(DataTypes.STRING)
+    @Column(DataType.STRING)
     nombre!: string;
 
     @AllowNull(false)
-    @Column(DataTypes.STRING)
+    @Column(DataType.STRING)
     contrasenia?: string;
 
 
     @AllowNull(true)
-    @Column(DataTypes.INTEGER)
+    @Column(DataType.INTEGER)
     usuarioId?: number;
 }
 
