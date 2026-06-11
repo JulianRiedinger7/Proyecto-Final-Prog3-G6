@@ -14,6 +14,9 @@ export interface InterfaceLibro {
     usuarioId?: number
 }
 
+export interface ActualizarReseña{
+    resenia?: string}
+
 export interface IActualizarEstado {
     estado: EstadoLectura;
 }

@@ -23,6 +23,8 @@ export class LibrosRouter {
 
         
         this.router.get('/', libroC.getLibros);
+        this.router.patch('/:id/actualizarresenia',libroC.patchResenia); 
+        this.router.get('/:id', libroC.getPorId);
         this.router.post('/', libroC.postLibro);
         this.router.put('/:id', libroC.putLibro);
         this.router.delete('/:id', libroC.borrarLibro);
