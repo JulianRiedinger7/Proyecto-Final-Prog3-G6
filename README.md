@@ -3,7 +3,7 @@
 Proyecto base para el trabajo final de Programacion 3. Es una aplicacion web completa con frontend, backend, base de datos y servicios auxiliares, todo orquestado con Docker Compose.
 
 Link render:  
-Documentación Postman: 
+Documentación Postman:
 
 ## 👥 Integrantes - Grupo 6
 
@@ -19,25 +19,27 @@ Documentación Postman:
 ### División del Trabajo
 
 #### Alejandro Lucas Baldres
+
 **Entidad Libro**  
-*Backend*
-* Interfaces:
-  1. Libro-interface: *Solo InterfaceLibro*
+_Backend_
+
+- Interfaces:
+  1. Libro-interface: _Solo InterfaceLibro_
   2. dbConfig-interface
-* Modelo Libro
-* Manejador de Errores: error-libros-handler.middlerware.ts
-* Seeder Libro
-* Controlador Libro con los siguientes endpoints:
+- Modelo Libro
+- Manejador de Errores: error-libros-handler.middlerware.ts
+- Seeder Libro
+- Controlador Libro con los siguientes endpoints:
   1. GET /api/libros
   2. GET /api/libros/:id
   3. GET /api/libros/portada/:id
   4. POST /api/libros
   5. PUT /api/libros/:id
   6. DELETE /api/libros/:id
-* Rutas:
+- Rutas:
   1. Asociadas a libros-controller
   2. Enrutador principal (index-router.ts)
-* Refactorizacion a P.O.O e implementacion de TypeScript:
+- Refactorizacion a P.O.O e implementacion de TypeScript:
   1. App.ts
   2. Server.ts
   3. database.ts
@@ -52,16 +54,15 @@ GET /api/libros/leidos
 GET /api/libros/leyendo
 GET /api/libros/por-leer
 
-
 Agrega sus rutas a src/routes/books.ts
 
 #### Julieta Dabús
+
 Agrega a src/interfaces/IBook.ts: IUpdateBookRatingDTO
 src/controllers/bookRatingController.ts
 
 PATCH /api/libros/:id/calificacion — valida que sea entre 1 y 5
 GET /api/libros/mejor-calificados — ORDER BY rating DESC donde rating no es null
-
 
 Agrega sus rutas a src/routes/books.ts
 
@@ -72,7 +73,6 @@ src/controllers/bookReviewController.ts
 
 PATCH /api/libros/:id/resena
 GET /api/libros/stats — devuelve IBookStats: total de libros, cantidad por cada estado, promedio de rating, género con más libros
-
 
 Agrega sus rutas a src/routes/books.ts
 Consolida el API_test.md grupal con los cURLs de todos
@@ -105,8 +105,6 @@ GET /api/usuarios/:id
 POST /api/usuarios
 DELETE /api/usuarios/:id
 src/routes/users.ts
-
-
 
 ## Metodologías utilizadas
 
@@ -171,13 +169,13 @@ implementar)        implementar)
 
 Todos los servicios corren dentro de contenedores Docker y se comunican a traves de una red interna (`app_network`). Caddy actua como reverse proxy: recibe todo el trafico en el puerto 80 y lo redirige al frontend o al backend segun la URL.
 
-| Servicio | Tecnologia | Puerto | Funcion |
-|----------|------------|--------|---------|
-| **Frontend** | React 18 | 3000 | Interfaz de usuario |
-| **Backend** | Express + TypeScript + Sequelize | 3001 | API REST |
-| **Database** | PostgreSQL 15 | 5432 | Base de datos relacional |
-| **Proxy** | Caddy 2 | 80 | Reverse proxy |
-| **pgAdmin** | pgAdmin 4 | 5050 | Administracion visual de la BD |
+| Servicio     | Tecnologia                       | Puerto | Funcion                        |
+| ------------ | -------------------------------- | ------ | ------------------------------ |
+| **Frontend** | React 18                         | 3000   | Interfaz de usuario            |
+| **Backend**  | Express + TypeScript + Sequelize | 3001   | API REST                       |
+| **Database** | PostgreSQL 15                    | 5432   | Base de datos relacional       |
+| **Proxy**    | Caddy 2                          | 80     | Reverse proxy                  |
+| **pgAdmin**  | pgAdmin 4                        | 5050   | Administracion visual de la BD |
 
 ---
 
@@ -199,12 +197,12 @@ docker-compose up
 
 Una vez que todo este corriendo, podes acceder a:
 
-| Recurso | URL |
-|---------|-----|
-| Frontend (React) | http://localhost:3000 |
-| Backend API | http://localhost:3001/api |
-| Proxy (Caddy) | http://localhost |
-| pgAdmin | http://localhost:5050 |
+| Recurso          | URL                       |
+| ---------------- | ------------------------- |
+| Frontend (React) | http://localhost:3000     |
+| Backend API      | http://localhost:3001/api |
+| Proxy (Caddy)    | http://localhost          |
+| pgAdmin          | http://localhost:5050     |
 
 > **Tip:** Si queres correrlo en segundo plano, usa `docker-compose up -d`. Para ver los logs: `docker-compose logs -f`.
 
@@ -249,7 +247,7 @@ proyecto/
 │   ├── seeders/                     # Datos de prueba
 |   |   └── 20260606-seeder-libro.ts # Seeder para completar la tabla Libro
 │   ├── core/                     # Contenedor del Core de la API
-|   |   └── server.ts             
+|   |   └── server.ts
 │   └── interfaces/
 │       ├── dbConfig-interface.ts    # Interface de la configuracion a la Base de datos
 │       └── Libro-interface.ts       # Interfaz del Modelo Libro
@@ -259,16 +257,21 @@ proyecto/
 
 ```
 
+## Diagrama Entidad-Relacion
+
+![Diagrama Entidad Relacion](./backend/assets/entidad-relacion.png)
+
 ## Tecnologias Utilizadas
 
 ### Backend
+
 - **[Express](https://expressjs.com/)** — Framework web para Node.js
 - **[Sequelize](https://sequelize.org/)** — ORM para bases de datos SQL
 - **[TypeScript](https://www.typescriptlang.org/)** — JS Tipado
 - **[cors](https://github.com/expressjs/cors)** — Configuracion de Cross-Origin Resource Sharing
 
 ### Infraestructura
+
 - **[Docker](https://docs.docker.com/)** — Contenedores
 - **[Docker Compose](https://docs.docker.com/compose/)** — Orquestacion multi-contenedor
 - **[PostgreSQL 15](https://www.postgresql.org/docs/15/)** — Base de datos relacional
-
