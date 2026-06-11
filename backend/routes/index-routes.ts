@@ -2,6 +2,7 @@ import express, { Router } from 'express';
 import { LibrosRouter } from './libros-routes';
 import { EstadisticasController } from '../controllers/estadisticas-controller';
 import { LibrosController } from '../controllers/libros-controller';
+import { UsuariosController } from '../controllers/usuarios-controller';
 
 
 export default class Enrutador {

@@ -4,6 +4,7 @@ import { Dialect } from 'sequelize';
 import config from '../config/database';
 import { DatabaseConfig } from '../interfaces/dbConfig-interface';
 import { Libro } from './Libro';
+import { Usuario } from './Usuario';
 
 
 type NodeEnv = keyof DatabaseConfig;
@@ -47,4 +48,5 @@ class Index {
 const db = Index.getInstance();
 export const { sequelize } = db;
 export { Sequelize, Libro};
+export {Sequelize, Usuario}
 export default db;

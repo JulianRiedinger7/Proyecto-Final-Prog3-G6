@@ -8,6 +8,8 @@ import { sequelize } from "../models";
 import errorHandler from "../middleware/error-handler.middleware";
 import Enrutador from "../routes/index-routes";
 import { ErrorLibros } from "../middleware/error-libros-handler.middlerware";
+import { ErrorUsuarios } from "../middleware/error-usuarios-handler-middlerware";
+
 //import { LibroSeeder } from "../seeders/20260606-seeder-libro";
 
 
@@ -64,6 +66,7 @@ export class Servidor {
 
   private errores() {
     this.app.use(ErrorLibros.manejadorErrores);
+    this.app.use(ErrorUsuarios.manejadorErrores)
     this.app.use(errorHandler);
   }
 

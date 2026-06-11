@@ -1,0 +1,21 @@
+# Variables Base de Datos
+POSTGRES_DB=app_database
+POSTGRES_USER=app_user
+POSTGRES_PASSWORD=app_password
+
+# Variables Backend
+NODE_ENV=development
+PORT=3001
+DB_HOST=database
+DB_PORT=5432
+DB_NAME=app_database
+DB_USER=app_user
+DB_PASSWORD=app_password
+JWT_SECRET=your_jwt_secret_here
+CORS_ORIGIN=http://localhost:3000
+
+# Variables PgAdmin
+PGADMIN_DEFAULT_EMAIL=admin@example.com
+PGADMIN_DEFAULT_PASSWORD=admin123
+PGADMIN_CONFIG_SERVER_MODE="False"
+PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED="False"
