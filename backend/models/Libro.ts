@@ -1,8 +1,9 @@
-import { Table, Column, Model, PrimaryKey, AutoIncrement, AllowNull } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, AutoIncrement, AllowNull, BelongsTo, ForeignKey } from 'sequelize-typescript';
 import { InterfaceLibro, EstadoLectura, ActualizarReseña } from '../interfaces/Libro-interface';
 import { DataTypes, Op } from 'sequelize';
 import { EstadisticasLibro } from '../interfaces/Estadistica-interface';
-
+import { Usuario } from './usuario.model';
+import { Categoria } from './categoria.model';
 @Table({
     tableName: 'libros',
     timestamps: true 
@@ -44,21 +45,38 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
     @Column(DataTypes.STRING)
     resenia?: string;
 
+    @ForeignKey(() => Categoria)
     @AllowNull(true)
     @Column(DataTypes.INTEGER)
     generoId?: number;
+ 
+    @BelongsTo(() => Categoria)
+    categoria?: Categoria;
 
+    @ForeignKey(() => Usuario)
     @AllowNull(true)
     @Column(DataTypes.INTEGER)
     usuarioId?: number;
-
+ 
+    @BelongsTo(() => Usuario)
+    usuario?: Usuario;
 
     static async encontrarPorId (id: number): Promise<Libro | null> {
-        return await Libro.findByPk(id);
+        return await Libro.findByPk(id, {
+            include: [
+                {model: Categoria, attributes: ['id', 'nombre']},
+                {model: Usuario, attributes: ['id', 'nombre']}
+            ]
+        });
     }
 
     static async traerTodos (): Promise<InterfaceLibro[] | []> {
-        return await Libro.findAll();
+        return await Libro.findAll({
+            include: [
+                {model: Categoria, attributes: ['id', 'nombre']},
+                {model: Usuario, attributes: ['id', 'nombre']}
+            ]
+        });
     }
 
     static async crear(libro: InterfaceLibro): Promise<InterfaceLibro> {

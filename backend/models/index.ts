@@ -5,7 +5,7 @@ import config from "../config/database";
 import { DatabaseConfig } from "../interfaces/dbConfig-interface";
 import { Libro } from "./Libro";
 import { Categoria } from "./categoria.model";
-
+import { Usuario } from "./usuario.model";
 type NodeEnv = keyof DatabaseConfig;
 
 class Index {
@@ -21,7 +21,7 @@ class Index {
       port: Number(dbConfig.port),
       dialect: dbConfig.dialect as Dialect,
       logging: dbConfig.logging,
-      models: [Libro, Categoria],
+      models: [Libro, Categoria, Usuario],
       ...("pool" in dbConfig ? { pool: dbConfig.pool } : {}),
       ...("dialectOptions" in dbConfig ? { dialectOptions: dbConfig.dialectOptions } : {}),
     });
@@ -37,5 +37,5 @@ class Index {
 
 const db = Index.getInstance();
 export const { sequelize } = db;
-export { Sequelize, Libro, Categoria };
+export { Sequelize, Libro, Categoria, Usuario };
 export default db;
