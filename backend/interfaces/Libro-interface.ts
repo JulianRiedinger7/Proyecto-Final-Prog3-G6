@@ -15,5 +15,8 @@ export interface InterfaceLibro {
 }
 
 export interface ActualizarReseña{
-    resenia?: string
+    resenia?: string}
+
+export interface IActualizarEstado {
+    estado: EstadoLectura;
 }
