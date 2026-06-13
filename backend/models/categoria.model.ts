@@ -6,9 +6,11 @@ import {
   PrimaryKey,
   AutoIncrement,
   AllowNull,
+  HasMany,
   Validate,
 } from "sequelize-typescript";
 import { DataTypes } from "sequelize";
+import { Libro } from "./libro.model";
 
 @Table({
   tableName: "categorias",
@@ -29,11 +31,14 @@ export class Categoria extends Model<ICategoria> implements ICategoria {
   @Column(DataTypes.STRING)
   nombre!: string;
 
+  @HasMany(() => Libro)
+  libros?: Libro[];
+
   public static async traerTodas(): Promise<ICategoria[] | []> {
     return await Categoria.findAll();
   }
 
-  public static async encontrarPorId(id: number): Promise<Categoria | null> {
+  public static async encontrarPorId(id: number): Promise<ICategoria | null> {
     return await Categoria.findByPk(id);
   }
 
@@ -41,7 +46,7 @@ export class Categoria extends Model<ICategoria> implements ICategoria {
     return await Categoria.create(categoria);
   }
 
-  public static async borrar(id: number): Promise<Categoria | null> {
+  public static async borrar(id: number): Promise<ICategoria | null> {
     const categoria = await Categoria.findByPk(id);
     if (categoria) {
       await categoria.destroy();

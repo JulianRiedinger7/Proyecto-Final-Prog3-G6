@@ -1,6 +1,6 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, AllowNull } from 'sequelize-typescript';
 import { DataType } from 'sequelize-typescript';
-import { InterfaceUsuario } from '../interfaces/Usuario-interface';
+import { InterfaceUsuario } from '../interfaces/Usuario.interface';
 
 @Table({
     tableName: 'usuarios',

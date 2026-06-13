@@ -2,8 +2,8 @@
 import { Sequelize } from "sequelize-typescript";
 import { Dialect } from "sequelize";
 import config from "../config/database";
-import { DatabaseConfig } from "../interfaces/dbConfig-interface";
-import { Libro } from "./Libro";
+import { DatabaseConfig } from "../interfaces/dbConfig.interface";
+import { Libro } from "./libro.model";
 import { Categoria } from "./categoria.model";
 import { Usuario } from "./usuario.model";
 type NodeEnv = keyof DatabaseConfig;
