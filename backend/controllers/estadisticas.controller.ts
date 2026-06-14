@@ -1,5 +1,5 @@
 import {Response, Request, NextFunction} from 'express';
-import {Estadisticas} from '../models/estadisticas.model';
+import {Estadisticas} from '../utils/estadisticas.util';
 
 
 export class EstadisticasController {
