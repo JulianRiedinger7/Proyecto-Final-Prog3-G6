@@ -85,6 +85,8 @@ export class Servidor {
         console.log("✅ Database synchronized");
         const { LibroSeeder } = require("../seeders/20260606-seeder-libro");
         const { CategoriaSeeder } = require("../seeders/20260605145618-categorias");
+        const { UsuarioSeeder } = require ("../seeders/20260614-seeder-usuarios");
+        await UsuarioSeeder.generarSeed();
         await CategoriaSeeder.cargarCategorias();
         await LibroSeeder.generarSeed();
       }
