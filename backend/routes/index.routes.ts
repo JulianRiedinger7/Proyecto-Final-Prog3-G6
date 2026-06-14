@@ -3,7 +3,7 @@ import { LibrosRouter } from "./libros.routes";
 import { CategoriasRouter } from "./categorias.routes";
 import { EstadisticasController } from "../controllers/estadisticas.controller";
 import { LibrosController } from "../controllers/libros.controller";
-import { UsuariosRouter } from "./usuarios-routes";
+import { UsuariosRouter } from "./usuarios.routes";
 
 export default class Enrutador {
   private router: Router;
@@ -13,6 +13,7 @@ export default class Enrutador {
     this.RutaEstado();
     this.rutaLibros();
     this.rutaCategorias();
+    this.rutaUsuarios();
   }
 
   private RutaEstado() {
@@ -40,7 +41,7 @@ export default class Enrutador {
     return this.router;
   }
 
-  private getUsuarios() {
+  private rutaUsuarios() {
     this.router.use("/usuarios", new UsuariosRouter().getRouter());
   }
 }
