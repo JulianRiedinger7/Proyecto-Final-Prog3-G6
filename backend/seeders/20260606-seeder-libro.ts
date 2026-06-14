@@ -1,7 +1,7 @@
 import { sequelize } from "../models";
 import { Libro } from "../models";
-import { InterfaceLibro } from "../interfaces/Libro-interface";
-import { EstadoLectura } from "../interfaces/Libro-interface";
+import { InterfaceLibro } from "../interfaces/Libro.interface";
+import { EstadoLectura } from "../interfaces/Libro.interface";
 
 //Para las portadas se utiliza la api de Open Library
 // Para llamar a las portadas es con el Open Library ID 
@@ -16,6 +16,7 @@ export class LibroSeeder {
             portada: 'OL9137998',
             estado: EstadoLectura.PorLeer,
             puntaje: 5,
+            generoId: 1,
             resenia: 'Una obra maestra de la fantasía épica.'
         },
         {
@@ -25,6 +26,7 @@ export class LibroSeeder {
             portada: 'OL17228124',
             estado: EstadoLectura.PorLeer,
             puntaje: 5,
+            generoId: 2,
             resenia: 'El realismo mágico en su máxima expresión.'
         },
         {
@@ -34,12 +36,14 @@ export class LibroSeeder {
             portada: 'OL33338961',
             estado: EstadoLectura.PorLeer,
             puntaje: 4,
+            generoId: 3,
             resenia: 'Una distopía perturbadora y vigente.'
         },
         {
             titulo: 'Don Quijote de la Mancha',
             autor: 'Miguel de Cervantes',
             anio: 1605,
+            generoId: 4,
             estado: EstadoLectura.PorLeer
         },
         {
@@ -49,6 +53,7 @@ export class LibroSeeder {
             portada: 'OL37789016',
             estado: EstadoLectura.PorLeer,
             puntaje: 5,
+            generoId: 5,
             resenia: 'Cuentos que expanden la percepción del tiempo y el espacio.'
         },
         {
@@ -57,7 +62,8 @@ export class LibroSeeder {
             anio: 2012,
             portada: 'OL16568759',
             estado: EstadoLectura.PorLeer,
-            puntaje: 5
+            puntaje: 5,
+            generoId: 6
         }
     ];
 

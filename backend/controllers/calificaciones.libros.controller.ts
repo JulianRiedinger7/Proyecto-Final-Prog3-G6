@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Libro } from '../models/Libro';
+import { Libro } from '../models/libro.model';
 const { Op } = require('sequelize');
 
 export class CalificacionController {

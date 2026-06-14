@@ -6,7 +6,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import { sequelize } from "../models";
 import errorHandler from "../middleware/error-handler.middleware";
-import Enrutador from "../routes/index-routes";
+import Enrutador from "../routes/index.routes";
 import { ErrorLibros } from "../middleware/error-libros-handler.middlerware";
 //import { LibroSeeder } from "../seeders/20260606-seeder-libro";
 
@@ -82,8 +82,8 @@ export class Servidor {
         console.log("✅ Database synchronized");
         const { LibroSeeder } = require("../seeders/20260606-seeder-libro");
         const { CategoriaSeeder } = require("../seeders/20260605145618-categorias");
-        await LibroSeeder.generarSeed();
         await CategoriaSeeder.cargarCategorias();
+        await LibroSeeder.generarSeed();        
       }
 
       this.app.listen(this.port, () => {

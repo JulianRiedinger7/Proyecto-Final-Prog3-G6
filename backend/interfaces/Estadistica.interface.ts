@@ -1,4 +1,4 @@
-import {EstadoLectura} from "../interfaces/Libro-interface";
+import {EstadoLectura} from "./Libro.interface";
 
 export interface EstadisticasLibro {
     TotalLibros: number,

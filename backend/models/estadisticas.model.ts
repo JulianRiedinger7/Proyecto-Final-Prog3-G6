@@ -1,6 +1,6 @@
-import { Libro } from "./Libro";
-import { EstadisticasLibro } from '../interfaces/Estadistica-interface';
-import { EstadoLectura } from "../interfaces/Libro-interface";
+import { Libro } from "./libro.model";
+import { EstadisticasLibro } from '../interfaces/Estadistica.interface';
+import { EstadoLectura } from "../interfaces/Libro.interface";
 import { Op } from "sequelize";
 
 export class Estadisticas { 

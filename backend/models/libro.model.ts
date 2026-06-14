@@ -1,7 +1,7 @@
 import { Table, Column, Model, PrimaryKey, AutoIncrement, AllowNull, BelongsTo, ForeignKey } from 'sequelize-typescript';
-import { InterfaceLibro, EstadoLectura, ActualizarReseña } from '../interfaces/Libro-interface';
+import { InterfaceLibro, EstadoLectura, ActualizarReseña } from '../interfaces/Libro.interface';
 import { DataTypes, Op } from 'sequelize';
-import { EstadisticasLibro } from '../interfaces/Estadistica-interface';
+import { EstadisticasLibro } from '../interfaces/Estadistica.interface';
 import { Usuario } from './usuario.model';
 import { Categoria } from './categoria.model';
 @Table({
@@ -61,7 +61,7 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
     @BelongsTo(() => Usuario)
     usuario?: Usuario;
 
-    static async encontrarPorId (id: number): Promise<Libro | null> {
+    static async encontrarPorId (id: number): Promise<InterfaceLibro | null> {
         return await Libro.findByPk(id, {
             include: [
                 {model: Categoria, attributes: ['id', 'nombre']},
@@ -83,7 +83,7 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
         return await Libro.create(libro);
     }
 
-    static async actualizarLibro(id: number, libro:Partial<InterfaceLibro>): Promise<Libro | null> {
+    static async actualizarLibro(id: number, libro:Partial<InterfaceLibro>): Promise<InterfaceLibro | null> {
         const libroBd: Libro | null= await Libro.findByPk(id);
         let salida: any = null;
         if (libroBd) {
@@ -94,7 +94,7 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
         return salida;
     }
 
-    static async borrarPorId(id:number): Promise<Libro | null> {
+    static async borrarPorId(id:number): Promise<InterfaceLibro | null> {
         const libroBd: Libro | null = await Libro.findByPk(id);
         let salida: any = null;
         if (libroBd) {
@@ -112,7 +112,7 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
         return (await Libro.findByPk(id, { attributes: ['portada'], raw: true}))?.portada;
     }
 
-    static async actualizarResenia(id: number, resenia: ActualizarReseña): Promise<Libro | null> {
+    static async actualizarResenia(id: number, resenia: ActualizarReseña): Promise<InterfaceLibro | null> {
         const librobD: Libro | null = await Libro.findByPk(id); 
         let salida: any = null;
         if (librobD) {

@@ -1,7 +1,7 @@
-import { LibrosController } from "../controllers/libros-controller";
-import {EstadoLibroController} from "../controllers/estado-libro-controller";
+import { LibrosController } from "../controllers/libros.controller";
+import {EstadoLibroController} from "../controllers/estado.libro.controller";
 import express, { Router } from 'express';
-import { CalificacionController } from "../controllers/calificaciones-libros-controller";
+import { CalificacionController } from "../controllers/calificaciones.libros.controller";
 
 export class LibrosRouter {
     private router: Router;

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { Libro } from '../models/Libro';
+import { Libro } from '../models/libro.model';
 
 
 export class LibrosController {
@@ -102,7 +102,7 @@ export class LibrosController {
         }        
     }
 
-    public patchResenia = async (req: Request, res: Response): Promise<Response> => {
+    public patchResenia = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
         let codigo: number;
         let salida: object | null;
         try{
@@ -114,9 +114,7 @@ export class LibrosController {
         return res.status(codigo).json({ msg: "Reseña actualizada correctamente", libro: salida });
     }
         catch (error) {
-            codigo = 500;
-            salida = {msg: error};
-            return res.status(codigo).json(salida);
+            next(error);
         }
         
     }

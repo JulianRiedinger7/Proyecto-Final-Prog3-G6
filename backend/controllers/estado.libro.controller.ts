@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { Libro } from '../models/Libro';
-import { EstadoLectura, type IActualizarEstado } from '../interfaces/Libro-interface';
+import { Libro } from '../models/libro.model';
+import { EstadoLectura, type IActualizarEstado } from '../interfaces/Libro.interface';
 
 export class EstadoLibroController {
 
