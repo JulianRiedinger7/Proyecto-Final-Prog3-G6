@@ -46,15 +46,17 @@ _Backend_
 
 #### Marianela Belardinelli
 
-Agrega a src/interfaces/IBook.ts: IUpdateBookStatusDTO
-src/controllers/bookStatusController.ts
+**Estado de lectura** 
+_Backend_ 
 
-PATCH /api/libros/:id/estado — valida que sea por_leer, leyendo o leido
-GET /api/libros/leidos
-GET /api/libros/leyendo
-GET /api/libros/por-leer
-
-Agrega sus rutas a src/routes/books.ts
+- Interfaz agregada a Libro-interface.ts:
+  1. IActualizarEstado
+- Controlador bookStatusController.ts con los siguientes endpoints:
+  1. GET /api/libros/leidos
+  2. GET /api/libros/leyendo
+  3. GET /api/libros/por-leer
+  4. PATCH /api/libros/:id/estado — valida que el estado sea un valor del enum EstadoLectura (por leer, leyendo, leido)
+- Rutas agregadas a libros-routes.ts
 
 #### Julieta Dabús
 
