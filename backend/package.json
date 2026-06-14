@@ -4,7 +4,7 @@
   "description": "Backend API with Express and Sequelize",
   "main": "app.ts",
   "scripts": {
-    "start": "ts-node --transpile-only app.ts",
+    "start": "node app.js",
     "dev": "ts-node-dev --respawn --transpile-only app.ts",
     "build": "tsc",
     "migrate": "npx sequelize-cli db:migrate",
@@ -26,9 +26,7 @@
     "redis": "^4.6.7",
     "reflect-metadata": "^0.1.14",
     "sequelize": "^6.37.3",
-    "sequelize-typescript": "^2.1.6",
-    "ts-node": "^10.9.0",
-    "typescript": "^5.0.0"
+    "sequelize-typescript": "^2.1.6"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.0",
