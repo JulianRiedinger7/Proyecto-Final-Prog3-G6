@@ -46,8 +46,8 @@ _Backend_
 
 #### Marianela Belardinelli
 
-**Estado de lectura** 
-_Backend_ 
+**Estado de lectura**  
+_Backend_
 
 - Interfaz agregada a Libro-interface.ts:
   1. IActualizarEstado
@@ -60,14 +60,16 @@ _Backend_
 
 #### Julieta Dabús
 
-**Califaciones y Relaciones FK**
+**Califaciones y Relaciones FK**  
 _Backend_
 
 - Controlador calificacion-libros-controller.ts con los siguientes endpoints:
+
 1. PATCH /api/libros/:id/calificacion — valida que sea entre 1 y 5
 2. GET /api/libros/mejor-calificados — devuelve libros con puntaje asignado, ordenados de mayor a menor
+
 - Rutas agregadas a libros-routes.ts
-- Relaciones FK definidas mediante decoradores @ForeingKey y @BelongsTo en el modelo Libro.ts: 
+- Relaciones FK definidas mediante decoradores @ForeingKey y @BelongsTo en el modelo Libro.ts:
   - usuarioId -> @ForeingKey (() => Usuario)
   - generoId -> @ForeingKey (() => Categoria)
 - Actualización de traerTodos y encontrarPorId para incluir Usuario y Categoria en la respuesta
@@ -85,18 +87,19 @@ Consolida el API_test.md grupal con los cURLs de todos
 
 #### Julián Riedinger
 
-src/interfaces/IGenre.ts — IGenre
-src/models/Genre.ts
-src/migrations/XXXX-create-genres.ts
-src/seeders/XXXX-demo-genres.ts — Ficción, No ficción, Ciencia ficción, Historia, Fantasía, Terror, Biografía
-src/controllers/genreController.ts
+**Entidad Categorias**  
+_Backend_
 
-GET /api/generos
-GET /api/generos/:id
-POST /api/generos
-DELETE /api/generos/:id
-
-src/routes/genres.ts
+- Interfaz Categorias
+- Modelo Categorias
+- Manejador de Errores Global: error-handler.middleware.ts
+- Seeder Categorias
+- Controlador Categorias con los siguientes endpoints:
+  1. GET /api/categorias
+  2. GET /api/categorias/:id
+  3. POST /api/categorias
+  4. DELETE /api/categorias/:id
+- Rutas asociadas a categorias-controller
 
 #### Clara Zivano
 
