@@ -132,5 +132,34 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
         
             });
     }
+     static async contarPorEstado(estado: EstadoLectura): Promise<number> {
+        return await Libro.count({ where: { estado } });
+    }
+
+    static async terminadoRecientemente(): Promise <string | null> {
+        const libroLeido = await Libro.findOne({
+            where: { estado: EstadoLectura.Leido },
+            order: [['updatedAt', 'DESC']],
+            attributes: ['titulo']
+        });
+        return libroLeido ? libroLeido.titulo : null;
+    }
+
+    static async incorporadoRecientemente(): Promise<string | null> {
+        const libroIncorporado = await Libro.findOne({
+            order: [['createdAt', 'DESC']],
+            attributes: ['titulo']
+        });
+        return libroIncorporado ? libroIncorporado.titulo : null;
+    }
+
+    static async leyendoRecientemente(): Promise<string | null> {
+        const libroLeyendo = await Libro.findOne({
+            where: { estado: EstadoLectura.Leyendo },
+            order: [['updatedAt', 'DESC']],
+            attributes: ['titulo']
+        });
+        return libroLeyendo ? libroLeyendo.titulo : null;
+    }
 }
 
