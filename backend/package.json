@@ -4,8 +4,8 @@
   "description": "Backend API with Express and Sequelize",
   "main": "app.ts",
   "scripts": {
-    "start": "ts-node --transpile-only app.ts",
-    "dev": "ts-node-dev --respawn --transpile-only app.ts",
+    "start": "ts-node app.ts",
+    "dev": "nodemon --exec ts-node app.ts",
     "build": "tsc",
     "migrate": "npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:all",
