@@ -1,11 +1,9 @@
-import {EstadoLectura} from "./Libro.interface";
-
 export interface EstadisticasLibro {
-    TotalLibros: number,
-    LibrosLeidos: number, 
-    LibrosLeyendo: number,
-    LibrosPorLeer: number,
-    LeidoReciente: string,
-    TerminadoReciente: string,
-    UltimoIncorporad: string,
+  TotalLibros: number;
+  LibrosLeidos: number;
+  LibrosLeyendo: number;
+  LibrosPorLeer: number;
+  LeidoReciente: string;
+  TerminadoReciente: string;
+  UltimoIncorporad: string;
 }

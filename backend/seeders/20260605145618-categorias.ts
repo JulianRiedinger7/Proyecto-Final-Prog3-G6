@@ -1,6 +1,5 @@
 "use strict";
 import { ICategoria } from "../interfaces/categoria.interface";
-import { sequelize } from "../models";
 import { Categoria } from "../models";
 
 export class CategoriaSeeder {
