@@ -13,8 +13,9 @@ export class UsuariosRouter {
     const usuarioC: UsuariosController = new UsuariosController();
 
     this.router.get("/", usuarioC.getUsuarios);
-    //this.router.post('/', usuariosC.postUsuario);
-    // this.router.put('/:id', usuariosC.putUsuario);
+    this.router.get("/:id", usuarioC.getPorId);
+    this.router.post("/", usuarioC.postUsuario);
+    this.router.delete("/:id", usuarioC.deleteUsuario);
   }
 
   public getRouter(): Router {
