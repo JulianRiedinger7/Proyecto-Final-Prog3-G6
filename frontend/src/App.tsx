@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-      <GeneroItem genero={{ nombre: "Prueba" }} icono="hola" />
+      <GeneroItem genero={{ nombre: "Prueba" }} icono="fa-book" />
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
