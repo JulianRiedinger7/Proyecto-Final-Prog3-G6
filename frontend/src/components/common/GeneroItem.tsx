@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Genero } from '../../types/Genero.type';
+import { BotonLista } from '../ui/boton.lista';
 
 // Definicion de Props
 interface GeneroItemProps {
@@ -51,18 +52,14 @@ export const GeneroItem = ({ genero, onEditar, onBorrar }: GeneroItemProps ) => 
         </div>
         {!editando &&
         (<div className="flex items-center gap-2">
-            <button type="button" className="p-2 hover:text-blanco rounded-full cursor-pointer" onClick={() => {
+            <BotonLista faLabel="fa-pen" onClick = { () => {
                 setEdicion(true);
                 setGenero(genero.nombre);
-            }}>
-                <i className="fa-solid fa-pen text-[16px]"></i>
-            </button>
-            <button className="p-2 rounded-full hover:text-blanco cursor-pointer" onClick={()=> {
+            }}/>               
+           <BotonLista faLabel="fa-trash" onClick={()=> {
                 onBorrar(genero.id);
                 }
-            }>          
-                <i className="fa-solid fa-trash text-[16px]"></i>
-            </button>
+            }/>                        
         </div>)}
        </li>
     )
