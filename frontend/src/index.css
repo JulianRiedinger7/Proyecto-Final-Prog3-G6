@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 @theme {
   /* Colores principales del diseño de Stitch */
   --color-primary: #1a3a2a;        /* verde oscuro — botones, sidebar activo */
@@ -13,6 +14,7 @@
   /* Tipografía */
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'Playfair Display', serif;   /* para títulos con estilo literario */
+  
 
   /* Bordes redondeados */
   --radius-card: 12px;
@@ -21,6 +23,7 @@
 
 /* Fuentes de Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 /* Estilos base globales */
 @layer base {
@@ -29,4 +32,8 @@
     color: var(--color-text);
     font-family: var(--font-sans);
   }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
