@@ -7,7 +7,7 @@ interface GeneroAgregarProps {
 
 export function GeneroAgregar ({genero, onClick}:GeneroAgregarProps) {
     return (
-        <div className="flex flex-col bg-amber-400 rounded-xl h-36 w-min items-center">
+        <div className="flex flex-col bg-blanco shadow-2xl rounded-xl h-36 w-min items-center">
             <div className="flex-1 w-full text-left pl-4 pt-4">
                 <h1 className="font-extrabold text-xl">Añadir Nuevo Genero</h1>
             </div>

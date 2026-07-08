@@ -10,12 +10,12 @@ interface GeneroListaProps {
 
 export function GeneroLista({ generos, onEditar, onBorrar }: GeneroListaProps) {
     return (
-        <div className="rounded-xl border overflow-hidden">
-            <div className="px-6 py-4 border-b border-surface-container flex justify-between items-center bg-surface-bright">
+        <div className="rounded-xl bg-secondary shadow-2xl border overflow-hidden">
+            <div className="px-6 py-4 flex justify-between items-center">
                 <span className="font-sans text-xs font-semibold uppercase">
                     Géneros Existentes
                 </span>
-                <span className="font-sans text-xs font-semibold px-3 py-1 rounded-full">
+                <span className="font-sans text-xs bg-secondary font-semibold px-3 py-1 rounded-full">
                     {generos.length} Generos Totales
                 </span>
             </div>

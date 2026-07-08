@@ -3,7 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
-import { GeneroTitulo } from './components/common/Genero.titulo'
+import { GestionGenero } from './pages/GestionGenero.pages'
+
 
 
 
@@ -13,7 +14,7 @@ function App() {
 
   return (
     <>
-      <GeneroTitulo/>
+      <GestionGenero/>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
