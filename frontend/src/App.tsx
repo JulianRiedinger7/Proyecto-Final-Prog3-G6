@@ -4,6 +4,7 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 import { BotonGenerico } from './components/ui/Boton.generico'
+import { GeneroAgregar } from './components/common/Genero.agregar'
 
 
 
@@ -12,7 +13,7 @@ function App() {
 
   return (
     <>
-      <BotonGenerico faLabel="fa-plus-circle" texto='Agregar' genero={{ id: 1, nombre: "El señor" }} />
+      <GeneroAgregar genero="TError"/>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
