@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Genero } from '../../types/Genero.type';
 import { BotonLista } from '../ui/boton.lista';
+import { IconoLista } from '../ui/Icono.lista';
 
 // Definicion de Props
 interface GeneroItemProps {
@@ -30,13 +31,11 @@ export const GeneroItem = ({ genero, onEditar, onBorrar }: GeneroItemProps ) => 
     return (
        <li className="flex items-center justify-between px-6 py-4 bg-primary text-blanco hover:bg-primary-hover hover:text-text-light">
         <div className="flex items-center gap-4 flex-1 min-w-0">
-            <div className="w-10 h-10 rounded-full bg-secondary/30 flex items-center justify-center">
-                <span className={`fa-solid fa-book text-sm`}></span>
-            </div>
+           <IconoLista faIcono="fa-book"/>
             {editando?(
                 <div className="flex items-center gap-2 flex-1 max-w-md">
                 <input type="text" value={generoEdicion} onChange={(e) => setGenero(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') guardarManejador(); if (e.key === 'Escape') cancelarEdicion();
-                }} className="w-full bg-blanco border border-primary font-sans text-sm rounded px-3 py-1.5 focus:outline-none" autoFocus/>
+                }} className="w-full bg-blanco text-primary border border-primary font-sans text-sm rounded px-3 py-1.5 focus:outline-none" autoFocus/>
             <button onClick={guardarManejador} className="p-1.5 bg-primary text-blanco rounded hover:bg-primary cursor-pointer flex items-center" title="Guardar">
                 <i className="fa-solid fa-check text-sm"></i>
             </button>
