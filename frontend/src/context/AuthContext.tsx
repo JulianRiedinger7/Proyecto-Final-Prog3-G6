@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useEffect } from "react";
+import { createContext, useState, useEffect, type ReactNode,  } from "react";
 import * as authService from "../services/authService";
 
 interface Usuario {
@@ -13,7 +13,8 @@ interface AuthContextType {
   login: (mail: string, contrasenia: string) => Promise<void>;
   logout: () => void;
 }
-
+// (silencio mensaje de error) 
+//eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -25,6 +26,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const tokenGuardado = localStorage.getItem("token");
     const usuarioGuardado = localStorage.getItem("usuario");
     if (tokenGuardado && usuarioGuardado) {
+      //silencio mensaje de error
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setToken(tokenGuardado);
       setUsuario(JSON.parse(usuarioGuardado));
     }
