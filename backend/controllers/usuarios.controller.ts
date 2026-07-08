@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { Usuario } from "../models/usuario.model";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export class UsuariosController {
 
@@ -53,7 +55,9 @@ export class UsuariosController {
         }
     };
 
-    public postUsuario = async (
+    //Deprecado: usar postRegister que hashea la constraseña antes de guardarla en la base de datos
+    //Se mantiene solo si necesitan altas de usuarios sin contraseñas hasheadas
+    /*public postUsuario = async (
         req: Request,
         res: Response,
         next: NextFunction
@@ -83,7 +87,7 @@ export class UsuariosController {
         } catch (error) {
             next(error);
         }
-    };
+    };*/
 
     public deleteUsuario = async (
         req: Request,
@@ -107,6 +111,99 @@ export class UsuariosController {
             return res.status(codigo).json({
                 msg: "Usuario eliminado correctamente",
                 usuario: salida
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    public postRegister = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<Response | void> => {
+        let codigo: number = 400;
+        let error: Error;
+
+        try {
+            const { nombre, contrasenia, mail } = req.body;
+
+            if (!nombre || !contrasenia || !mail) {
+                error = new Error("Faltan datos del usuario");
+                error.name = "400-Registro";
+                throw error;
+            }
+
+            const existente = await Usuario.encontrarPorMail(mail);
+            if (existente) {
+                error = new Error("Ya existe un usuario con ese mail");
+                error.name = "409-MailExistente";
+                throw error;
+            }
+
+            const contraseniaHasheada = await bcrypt.hash(contrasenia, 10);
+
+            const nuevoUsuario = await Usuario.crear({
+                nombre,
+                mail,
+                contrasenia: contraseniaHasheada
+            } as any);
+
+            
+            codigo = 201;
+            return res.status(codigo).json({
+                id: nuevoUsuario.id,
+                nombre: nuevoUsuario.nombre,
+                mail: nuevoUsuario.mail
+            });
+
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    public postLogin = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ): Promise<Response | void> => {
+        let error: Error;
+
+        try {
+            const { mail, contrasenia } = req.body;
+
+            if (!mail || !contrasenia) {
+                error = new Error("Faltan credenciales");
+                error.name = "400-Login";
+                throw error;
+            }
+
+            const usuario = await Usuario.encontrarPorMail(mail);
+            if (!usuario) {
+                error = new Error("Credenciales inválidas");
+                error.name = "401-Login";
+                throw error;
+            }
+
+            const contraseniaValida = await bcrypt.compare(contrasenia, usuario.contrasenia);
+            if (!contraseniaValida) {
+                error = new Error("Credenciales inválidas");
+                error.name = "401-Login";
+                throw error;
+            }
+
+            const token = jwt.sign(
+                { id: usuario.id, mail: usuario.mail, nombre: usuario.nombre },
+                process.env.JWT_SECRET as string,
+                { expiresIn: "24h" }
+            );
+
+            const { contrasenia: _, ...usuarioSinPassword } = usuario.toJSON();
+
+            return res.status(200).json({
+                usuario: usuarioSinPassword,
+                token
             });
 
         } catch (error) {
