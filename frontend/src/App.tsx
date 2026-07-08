@@ -3,8 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
-import { BotonGenerico } from './components/ui/Boton.generico'
-import { GeneroAgregar } from './components/common/Genero.agregar'
+import { GeneroTitulo } from './components/common/Genero.titulo'
+
 
 
 
@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      <GeneroAgregar genero="TError"/>
+      <GeneroTitulo/>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />

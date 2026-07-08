@@ -1,11 +1,10 @@
-interface BotonAtrasProps {
-    onClick: () => void;
-}
+//import { useNavigate } from 'react-router-dom';
 
-export function BotonAtras ({onClick}:BotonAtrasProps) {
+export function BotonAtras () {
+ //   const navigate = useNavigate();
     return (
-        <button className="cursor-pointer" onClick={() => onClick()}>
-            <span className={`fa-solid fa-arrow-left text-blanco text-sm`}></span>
+        <button className="cursor-pointer" onClick={() => {}}>
+            <span className={`fa-solid fa-arrow-left text-black text-2xl`}></span>
         </button>
     );
 }
