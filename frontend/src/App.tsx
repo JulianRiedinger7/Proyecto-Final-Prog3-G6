@@ -3,14 +3,15 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
-import { GeneroItem } from './components/common/GeneroItem'
+import { GeneroLista } from './components/common/Genero.lista'
+
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <GeneroItem genero={{ id: 1, nombre: "El señor" }} />
+      <GeneroLista generos={[{ id: 1, nombre: "El señor" },{ id: 2, nombre: "El señor 2" }]} />
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />

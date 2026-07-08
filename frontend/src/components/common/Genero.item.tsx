@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { Genero } from '../../types/Genero.type';
-import { BotonLista } from '../ui/boton.lista';
+import { BotonLista } from '../ui/Boton.lista';
 import { IconoLista } from '../ui/Icono.lista';
 import { InputEdicion } from '../ui/InputEdicion.lista';
 
@@ -30,9 +30,9 @@ export const GeneroItem = ({ genero, onEditar, onBorrar }: GeneroItemProps ) => 
     }
 
     return (
-       <li className="flex items-center justify-between px-6 py-4 bg-primary text-blanco hover:bg-primary-hover hover:text-text-light">
+       <li className="flex items-center justify-between px-6 py-4 m-0.5 bg-primary text-blanco hover:bg-primary-hover hover:text-text-light">
         <div className="flex items-center gap-4 flex-1 min-w-0">
-           <IconoLista faIcono="fa-book"/>
+           <IconoLista faIcono="fa-bookmark"/>
            {editando? // Si se habilito la edicion muestro el input
                 (<InputEdicion valorActual={generoEdicion} onChange={setGenero} onGuardar={guardarManejador} onCancelar={cancelarEdicion}/>)
                 :(<div className="flex items-baseline gap-2 min-w-0">
