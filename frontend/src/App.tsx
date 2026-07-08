@@ -3,7 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
-import { GeneroLista } from './components/common/Genero.lista'
+import { BotonGenerico } from './components/ui/Boton.generico'
+
 
 
 function App() {
@@ -11,7 +12,7 @@ function App() {
 
   return (
     <>
-      <GeneroLista generos={[{ id: 1, nombre: "El señor" },{ id: 2, nombre: "El señor 2" }]} />
+      <BotonGenerico faLabel="fa-plus-circle" texto='Agregar' genero={{ id: 1, nombre: "El señor" }} />
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
