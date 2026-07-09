@@ -36,7 +36,7 @@ export const GeneroItem = ({ genero, onEditar, onBorrar }: GeneroItemProps ) => 
            {editando? // Si se habilito la edicion muestro el input
                 (<InputEdicion valorActual={generoEdicion} onChange={setGenero} onGuardar={guardarManejador} onCancelar={cancelarEdicion}/>)
                 :(<div className="flex items-baseline gap-2 min-w-0">
-                        <span className="font-sans text-sm text-on-surface font-bold font-sans truncate">
+                        <span className="font-sans text-sm text-on-surface font-bold truncate">
                             {genero.nombre.toUpperCase()}
                         </span>
                 </div>)}

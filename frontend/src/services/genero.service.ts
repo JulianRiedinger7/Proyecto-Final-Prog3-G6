@@ -64,17 +64,22 @@ export class generoService  {
         let error: Error;
 
         try {
+            if (!nombre.trim()) {
+                 error = new Error(`Genero a agregar vacio`);
+                        error.name = "400";
+                        throw error;
+            }
             respuesta = await fetch(`${API_URL}/categorias`);
             if (respuesta.ok) {
                 generos = await respuesta.json();
-                for (let genero:Genero in generos) {
+                for (const genero of generos) {
                     if (genero.nombre.toUpperCase().trim() === nombre.toUpperCase().trim()) {
                         error = new Error(`Genero ${nombre} existente en la base con id #${genero.id}`);
                         error.name = "400";
                         throw error;
                     }
                 }
-            respuesta = await fetch (`$API_URL/categorias`, {method: 'POST',
+            respuesta = await fetch (`${API_URL}/categorias`, {method: 'POST',
                                             headers: {
                                             'Content-Type': 'application/json',
                                             },
@@ -86,7 +91,7 @@ export class generoService  {
                 throw error;
             }
             resultado.codigo = 201;
-            resultado.mensaje = respuesta.statusText;
+            resultado.objeto = await respuesta.json();
             }
         } catch (error) {
             resultado.codigo = error.name;

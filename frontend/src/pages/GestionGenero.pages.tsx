@@ -51,8 +51,29 @@ export function GestionGenero () {
         }
     }
 
+    const manejadorAgregar = async (genero: string) => {
+        try {
+            const respuesta: TipoRespuesta = await generoService.agregarGenero(genero);
+            if (respuesta.codigo != 201) {
+                elementoOrigenRef.current = document.activeElement as HTMLDivElement;
+                setErrorMensaje(respuesta.mensaje);
+                return;
+            }
+            setErrorMensaje(null);
+            setGeneros((generosAnteriores) => [...generosAnteriores, respuesta.objeto as Genero]);
+        } catch (error) {
+            console.error("Error al editar el género:", error);
+            setErrorMensaje("Error al editar el género.");
+        }
+    }
+
     const manejadorCerrarError = () => {
         setErrorMensaje(null);
+        setTimeout(() => {
+            if (elementoOrigenRef.current) {
+                elementoOrigenRef.current.focus();
+            }
+        }, 0);
     }
 
     return (
@@ -61,7 +82,7 @@ export function GestionGenero () {
                 <GeneroTitulo/>
             </div>
             <div>
-                <GeneroAgregar onClick={()=>{}} genero=""/>
+                <GeneroAgregar onClick={manejadorAgregar}/>
             </div>
             <div>
                 <GeneroLista generos={generos} onBorrar={manejadorBorrar} onEditar={manejadorEditar}/>
