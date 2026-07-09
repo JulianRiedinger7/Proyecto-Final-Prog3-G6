@@ -1,6 +1,6 @@
 import React from "react"
 import type { Genero } from "../../types/Genero.type"
-import { GeneroItem } from "./Genero.item";
+import { GeneroItem } from "./GeneroItem.lista";
 
 interface GeneroListaProps {
     generos: Genero[];

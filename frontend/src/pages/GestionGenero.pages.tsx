@@ -3,7 +3,7 @@ import { type Genero } from "../types/Genero.type";
 import { GeneroAgregar } from "../components/common/Genero.agregar";
 import { GeneroLista } from "../components/common/Genero.lista";
 import { GeneroTitulo } from "../components/common/Genero.titulo";
-import { generoService } from "../services/generoService";
+import { generoService } from "../services/genero.service";
 
 
 
