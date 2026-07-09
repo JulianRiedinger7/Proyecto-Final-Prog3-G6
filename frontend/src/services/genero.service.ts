@@ -40,7 +40,7 @@ export class generoService  {
                                             headers: {
                                             'Content-Type': 'application/json',
                                             },
-                                            body: JSON.stringify({nombre}),
+                                            body: JSON.stringify({nombre})
                                         });
             if (!respuesta.ok) {
                 resultado.codigo = respuesta.status;
@@ -53,6 +53,44 @@ export class generoService  {
             resultado.codigo = respuesta?.status ?? 500;
             resultado.mensaje = respuesta?.statusText ?? (error instanceof Error ? error.message : 'Error Inexpecifico');
             console.error(error);
+        }
+        return resultado;
+    }
+
+    public static agregarGenero = async (nombre:string):Promise<TipoRespuesta> => {
+        let resultado: TipoRespuesta = {codigo: 500, mensaje: "Error Inexpecifico"};
+        let respuesta: Response | undefined;
+        let generos:Genero[] = [];
+        let error: Error;
+
+        try {
+            respuesta = await fetch(`${API_URL}/categorias`);
+            if (respuesta.ok) {
+                generos = await respuesta.json();
+                for (let genero:Genero in generos) {
+                    if (genero.nombre.toUpperCase().trim() === nombre.toUpperCase().trim()) {
+                        error = new Error(`Genero ${nombre} existente en la base con id #${genero.id}`);
+                        error.name = "400";
+                        throw error;
+                    }
+                }
+            respuesta = await fetch (`$API_URL/categorias`, {method: 'POST',
+                                            headers: {
+                                            'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({nombre})
+                                        });
+            if (!respuesta.ok) {
+                error = new Error(`No se pudo crear el genero ${nombre}`);
+                error.name = '500';
+                throw error;
+            }
+            resultado.codigo = 201;
+            resultado.mensaje = respuesta.statusText;
+            }
+        } catch (error) {
+            resultado.codigo = error.name;
+            resultado.mensaje = error.message;
         }
         return resultado;
     }
