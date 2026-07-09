@@ -4,6 +4,7 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 import { GestionGenero } from './pages/GestionGenero.pages'
+import { BrowserRouter } from 'react-router-dom';
 
 
 
@@ -13,6 +14,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
+    <BrowserRouter>
     <>
       <GestionGenero/>
       <section id="center">
@@ -120,8 +122,9 @@ function App() {
       </section>
 
       <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <section id="spacer"></section>      
+    </>    
+    </BrowserRouter>
   )
 }
 
