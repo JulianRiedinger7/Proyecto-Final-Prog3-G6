@@ -3,12 +3,20 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import { GestionGenero } from './pages/GestionGenero.pages'
+import { BrowserRouter } from 'react-router-dom';
+
+
+
+
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
+    <BrowserRouter>
     <>
+      <GestionGenero/>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -114,8 +122,9 @@ function App() {
       </section>
 
       <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      <section id="spacer"></section>      
+    </>    
+    </BrowserRouter>
   )
 }
 
