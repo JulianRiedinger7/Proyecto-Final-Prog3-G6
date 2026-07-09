@@ -29,6 +29,18 @@ export function GestionGenero () {
             console.error("Error al borrar el género:", error);
         }
     }
+
+    const manejadorEditar = async (id:number, nombre: string) => {
+        try {
+            await generoService.editarGenero(id, nombre);
+            setGeneros((generosAnteriores) =>
+            generosAnteriores.map((genero) => 
+                    genero.id === id ? { ...genero, nombre: nombre } : genero));
+        } catch (error) {
+            console.error("Error al editar el género:", error);
+        }
+    }
+
     return (
         <div className="flex flex-col w-min gap-10 bg-secondary">
             <div>
@@ -38,7 +50,7 @@ export function GestionGenero () {
                 <GeneroAgregar onClick={()=>{}} genero=""/>
             </div>
             <div>
-                <GeneroLista generos={generos} onBorrar={manejadorBorrar} onEditar={() => {}}/>
+                <GeneroLista generos={generos} onBorrar={manejadorBorrar} onEditar={manejadorEditar}/>
             </div>
         </div>
     );

@@ -28,4 +28,21 @@ export class generoService  {
             console.error(error);
         }
     }
+
+    public static editarGenero = async (id:number, nombre:string):Promise<void> => {
+        try {
+            const respuesta: Response = await fetch(`${API_URL}/categorias/${id}`,{
+                                            method: 'PUT',
+                                            headers: {
+                                            'Content-Type': 'application/json',
+                                            },
+                                            body: JSON.stringify({nombre}),
+                                        });
+            if (!respuesta.ok) {
+                throw new Error(`Error ${respuesta.status}: ${respuesta.statusText}`);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
