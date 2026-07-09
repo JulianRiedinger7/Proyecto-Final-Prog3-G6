@@ -21,7 +21,7 @@ export function GeneroLista({ generos, onEditar, onBorrar }: GeneroListaProps) {
             </div>
             <ul>
                 {generos.map((g) => (
-                    <GeneroItem genero={g} onEditar={onEditar} onBorrar={onBorrar}/>
+                    <GeneroItem key={g.id} genero={g} onEditar={onEditar} onBorrar={() => onBorrar(g.id)}/>
                 ))}
             </ul>
             <div className="px-6 py-4 border-t text-center">

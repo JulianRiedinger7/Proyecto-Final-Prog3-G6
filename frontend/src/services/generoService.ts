@@ -17,4 +17,15 @@ export class generoService  {
             return [];
         }
     }
+
+    public static borrarGenero = async (id:number):Promise<void> => {
+        try {
+            const respuesta: Response = await fetch(`${API_URL}/categorias/${id}`, {method:'DELETE'});
+            if (!respuesta.ok) {
+                throw new Error(`Error ${respuesta.status}: ${respuesta.statusText}`);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }

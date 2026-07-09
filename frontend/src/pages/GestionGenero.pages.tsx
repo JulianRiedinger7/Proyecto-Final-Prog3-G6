@@ -20,6 +20,15 @@ export function GestionGenero () {
         void cargarGeneros();
     }, []);
 
+    const manejadorBorrar = async (id:number) => {
+        try {
+            await generoService.borrarGenero(id);
+            setGeneros((generosAnteriores) =>
+            generosAnteriores.filter((genero) => genero.id != id));
+        } catch (error) {
+            console.error("Error al borrar el género:", error);
+        }
+    }
     return (
         <div className="flex flex-col w-min gap-10 bg-secondary">
             <div>
@@ -29,7 +38,7 @@ export function GestionGenero () {
                 <GeneroAgregar onClick={()=>{}} genero=""/>
             </div>
             <div>
-                <GeneroLista generos={generos} onBorrar={()=>{}} onEditar={() => {}}/>
+                <GeneroLista generos={generos} onBorrar={manejadorBorrar} onEditar={() => {}}/>
             </div>
         </div>
     );
