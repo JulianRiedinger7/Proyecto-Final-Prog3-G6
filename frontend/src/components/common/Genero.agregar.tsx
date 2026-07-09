@@ -14,7 +14,7 @@ export function GeneroAgregar ({genero, onClick}:GeneroAgregarProps) {
             <div className="flex-2">
                 <div className="flex items-center-safe ml-2 mr-2">
                     <input className="bg-secondary rounded-sm m-1 h-12 w-3xl" type="text"/>
-                    <BotonGenerico faLabel="fa-plus-circle" texto='Agregar' elemento={{ id: 0, nombre: genero }} onClick={() => onClick(genero)} />
+                    <BotonGenerico faLabel="fa-plus-circle" texto='Agregar' onClick={() => onClick(genero)} />
                 </div>
             </div>
         </div>
