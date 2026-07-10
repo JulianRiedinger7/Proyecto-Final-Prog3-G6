@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { obtenerLibro }  from "../services/detalleLibroService";
 import { Libro } from "../services/detalleLibroService";
 
 interface LibroInfoProps {
@@ -16,11 +14,10 @@ export default function LibroInfo({ libro }: LibroInfoProps) {
       />
 
       <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold">{libro.titulo}</h1>
         <p className="text-gray-600">{libro.autor}</p>
 
         <div className="flex gap-2">
-          <span className="badge">{libro.generoId}</span>
+          <span className="badge">{libro.generoId}</span> {/* me va a devolver un número, ver como asociarlo al genero*/}
           <span className="badge">{libro.estado}</span>
         </div>
       </div>
