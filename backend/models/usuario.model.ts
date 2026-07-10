@@ -49,6 +49,10 @@ export class Usuario extends Model<InterfaceUsuario> implements InterfaceUsuario
         }
         return salida;
     }
+
+    static async encontrarPorMail(mail: string): Promise<Usuario | null> {
+    return await Usuario.findOne({ where: { mail } });
+    }
 }
 
 
