@@ -1,5 +1,8 @@
 import api from "./api"; 
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 export interface Credenciales {
   mail: string;
   contrasenia: string;
