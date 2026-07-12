@@ -1,7 +1,7 @@
 import { type Genero } from "../types/Genero.type";
 import type { TipoRespuesta } from "../types/Respuesta.type";
 
-const API_URL:string = "http://localhost:3001/api";
+const API_URL:string = import.meta.env.API_URL;
 
 
 export class generoService  {
@@ -65,9 +65,9 @@ export class generoService  {
 
         try {
             if (!nombre.trim()) {
-                 error = new Error(`Genero a agregar vacio`);
-                        error.name = "400";
-                        throw error;
+                error = new Error(`Genero a agregar vacio`);
+                error.name = "400";
+                throw error;
             }
             respuesta = await fetch(`${API_URL}/categorias`);
             if (respuesta.ok) {
@@ -79,23 +79,24 @@ export class generoService  {
                         throw error;
                     }
                 }
-            respuesta = await fetch (`${API_URL}/categorias`, {method: 'POST',
-                                            headers: {
-                                            'Content-Type': 'application/json',
-                                            },
-                                            body: JSON.stringify({nombre})
-                                        });
-            if (!respuesta.ok) {
-                error = new Error(`No se pudo crear el genero ${nombre}`);
-                error.name = '500';
-                throw error;
-            }
-            resultado.codigo = 201;
-            resultado.objeto = await respuesta.json();
+                respuesta = await fetch(`${API_URL}/categorias`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({nombre})
+                });
+                if (!respuesta.ok) {
+                    error = new Error(`No se pudo crear el genero ${nombre}`);
+                    error.name = '500';
+                    throw error;
+                }
+                resultado.codigo = 201;
+                resultado.objeto = await respuesta.json();
             }
         } catch (error) {
-            resultado.codigo = error.name;
-            resultado.mensaje = error.message;
+            resultado.codigo = error instanceof Error ? Number(error.name) || 500 : 500;
+            resultado.mensaje = error instanceof Error ? error.message : "Error Inexpecifico";
         }
         return resultado;
     }
