@@ -1,7 +1,7 @@
 import { type Genero } from "../types/Genero.type";
 import type { TipoRespuesta } from "../types/Respuesta.type";
 
-const API_URL:string = "http://localhost:3001/api";
+const API_URL:string = import.meta.env.API_URL;
 
 
 export class generoService  {
