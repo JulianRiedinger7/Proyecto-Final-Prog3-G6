@@ -16,7 +16,7 @@ export const obtenerEstadisticas = async (): Promise<Estadisticas> => {
 
 export const obtenerLibrosLeyendo = async (): Promise<Libro[]> => {
   try {
-    const response = await axios.get<Libro[]>(`${API_URL}/libros/leyendo`);
+    const response = await axios.get<Libro[]>(`${API_URL}/libros`);
     return response.data;
   } catch (error: Error | unknown) {
     throw new Error(`Error al obtener los libros en lectura: ${(error as Error).message}`, {
