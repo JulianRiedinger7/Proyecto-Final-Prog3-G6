@@ -2,11 +2,12 @@ import { obtenerEstadisticas, obtenerLibrosLeyendo } from "../services/estadisti
 import { useEffect, useState } from "react";
 import type { Estadisticas } from "../types/Estadisticas.type";
 import type { Libro } from "../types/Libro.type";
-import { StatsCard } from "../components/statsCard";
+import { StatsCard } from "../components/common/statsCard";
+import { BookCard } from "../components/common/bookCard";
 
 export const DashboardPage = () => {
   const [estadisticas, setEstadisticas] = useState<Estadisticas | null>(null);
-  const [leyendo, setLeyendo] = useState<Libro[]>([]);
+  const [libros, setLibros] = useState<Libro[]>([]);
 
   useEffect(() => {
     const fetchEstadisticas = async () => {
@@ -18,18 +19,17 @@ export const DashboardPage = () => {
       }
     };
 
-    const fetchLeyendo = async () => {
+    const fetchLibros = async () => {
       try {
         const data = await obtenerLibrosLeyendo();
-        console.log(data);
-        setLeyendo(data);
+        setLibros(data);
       } catch (error) {
         console.error("Error al obtener los libros en lectura:", error);
       }
     };
 
     fetchEstadisticas();
-    fetchLeyendo();
+    fetchLibros();
   }, []);
 
   return (
@@ -45,13 +45,12 @@ export const DashboardPage = () => {
         <p>Cargando estadísticas...</p>
       )}
 
-      {leyendo.length > 0 ? (
+      {libros.length > 0 ? (
         <div>
-          <h3 className="text-xl font-bold mb-2">Continuar Leyendo</h3>
-          <ul>
-            {leyendo.map((libro) => (
-              // ACA DEBERIA USARSE UN COMPONENTE DE LIBRO
-              <li key={libro.id}>{libro.titulo}</li>
+          <h3 className="text-xl font-bold m-4">Continuar Leyendo</h3>
+          <ul className="flex flex-col items-center md:flex-row md:flex-wrap justify-center">
+            {libros.map((libro) => (
+              <BookCard key={libro.id} libro={libro} />
             ))}
           </ul>
         </div>
