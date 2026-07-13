@@ -1,3 +1,4 @@
+import type { Genero } from "./Genero.type";
 export interface Libro {
   id?: number;
   titulo: string;
@@ -9,4 +10,5 @@ export interface Libro {
   resenia?: string;
   generoId?: number;
   usuarioId?: number;
+  categoria?: Genero;
 }
