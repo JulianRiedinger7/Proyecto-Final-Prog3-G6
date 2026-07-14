@@ -1,10 +1,8 @@
-export async function obtenerLibro(id: number): Promise<Libro> {
-  const respuesta = await fetch(`http://localhost:3000/api/libros/${id}`);
+import api from './api'
 
-  if (!respuesta.ok) {
-    throw new Error("No se pudo obtener el libro");
-  }
-  return await respuesta.json();
+export async function obtenerLibro(id: number): Promise<Libro> {
+ const { data } = await api.get<Libro>(`/libros/${id}`);
+  return data;
 }
 
 export interface Libro {
@@ -20,15 +18,6 @@ export interface Libro {
 }
 
 export async function actualizarResenia(id: number, resenia: string, puntaje: number): Promise<Libro> {
-  const respuesta = await fetch(`http://localhost:3000/api/libros/${id}`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ resenia, puntaje }),
-  });
-
-  if (!respuesta.ok) {
-    throw new Error("No se pudo actualizar la reseña");
-  }
-
-  return await respuesta.json();
+  const { data } = await api.patch<Libro>(`/libros/${id}`, { resenia, puntaje }); //de todo esto que parece muy poco lo hace AXIOS en ./api
+  return data;
 }
