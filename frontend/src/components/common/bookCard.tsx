@@ -18,8 +18,16 @@ export const BookCard = ({ libro }: BookCardProps) => {
     }
   };
 
+  const loadRating = (puntaje: number = 0) => {
+    const stars = [];
+    for (let i = 0; i < puntaje; i++) {
+      stars.push(<span key={i} className="text-yellow-500 fa-solid fa-star"></span>);
+    }
+    return stars;
+  };
+
   return (
-    <div className="bg-secondary text-primary  p-6 rounded-lg shadow-md m-4 w-64 font-semibold hover:bg-accent transition-colors duration-300 hover:text-secondary uppercase md:h-115">
+    <div className="bg-secondary text-primary  p-6 rounded-lg shadow-md m-4 w-64 font-semibold hover:bg-accent transition-colors duration-300 hover:text-secondary uppercase md:h-130">
       <div className="relative mt-4">
         <img
           src={error ? "/book-cover-placeholder.png" : getPortadaUrl(libro.portada, "M")}
@@ -32,10 +40,12 @@ export const BookCard = ({ libro }: BookCardProps) => {
           {libro.estado}
         </span>
       </div>
-      <h3 className="text-xs mt-4 tracking-widest text-gray-500">{libro.categoria?.nombre}</h3>
-      <p className="text-xl mt-5 tracking-wide">{libro.titulo}</p>
-      <p className="text-sm mt-2 ">{libro.autor}</p>
-      <span className="text-lg font-bold">{libro.puntaje}</span>
+      <h3 className="text-xs mt-4 tracking-widest text-gray-500 italic">
+        {libro.categoria?.nombre}
+      </h3>
+      <p className="text-lg mt-5 tracking-wide">{libro.titulo}</p>
+      <p className="text-sm mt-2 italic font-light">{libro.autor}</p>
+      {loadRating(libro.puntaje ? Number(libro.puntaje) : 1)}
     </div>
   );
 };
