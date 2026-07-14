@@ -1,4 +1,3 @@
-import React from "react"
 import type { Genero } from "../../types/Genero.type"
 import { GeneroItem } from "./GeneroItem.lista";
 
