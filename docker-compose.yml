@@ -66,7 +66,7 @@ services:
   #     - WDS_SOCKET_PORT=3000
   #     - WDS_SOCKET_PATH=/ws
     ports:
-      - "5173:5173"
+      - "5173:80"
     volumes:
       - ./frontend:/app
   #     - /app/node_modules
