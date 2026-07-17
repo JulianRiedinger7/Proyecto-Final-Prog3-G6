@@ -14,6 +14,7 @@ import { DataTypes } from "sequelize";
   tableName: "categorias",
   timestamps: true,
 })
+
 export class Categoria extends Model<ICategoria> implements ICategoria {
   @PrimaryKey
   @AutoIncrement

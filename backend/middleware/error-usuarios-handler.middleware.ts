@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 
-
-
 export class ErrorUsuarios {
 
   static manejadorErrores(err: any, req: Request, res: Response, next: NextFunction) {
