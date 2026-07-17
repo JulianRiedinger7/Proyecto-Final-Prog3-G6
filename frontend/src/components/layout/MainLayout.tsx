@@ -1,5 +1,5 @@
-import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
+import {Sidebar}from './Sidebar';
+import {Navbar} from './Navbar';
 
 
 interface Props{
@@ -7,7 +7,7 @@ interface Props{
 }
 
 
-export default function MainLayout({children}:Props){
+export function MainLayout({children}:Props){
 
 return (
 
