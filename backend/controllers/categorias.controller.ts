@@ -74,4 +74,22 @@ export class CategoriasController {
       next(error);
     }
   };
+
+   public putCategoria = async (
+      req: Request,
+      res: Response,
+      next: NextFunction,
+    ): Promise<Response | void> => {
+      let codigo: number = 400;
+      let salida: object | null = {};
+  
+      try {
+        codigo = 200;
+        salida = await Categoria.actualizarCategoria(Number(req.params.id), req.body);
+        return res.status(codigo).json(salida);
+      } catch (error) {
+        next(error);
+      }
+    };
+  
 }
