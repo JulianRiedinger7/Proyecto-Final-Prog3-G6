@@ -5,28 +5,27 @@ import { EstadoLectura, InterfaceLibro, type IActualizarEstado } from '../interf
 export class EstadoLibroController {
 
     public obtenerLeidos = async (req: Request, res: Response, next: NextFunction) : Promise <Response |void> => {
-        try { //busco en bd libros con estado "leido"
-            const libros = await Libro.traerPorEstado(EstadoLectura.Leido, req.user?.id);
-            res.json(libros); //devuelvo array de libros
+        try {
+            const libros = await Libro.traerPorEstado(EstadoLectura.Leido, req.user?.id as number);
+            res.json(libros);
         } catch (error) {
             next(error);
         }
     };
 
     public obtenerLeyendo = async (req: Request, res: Response, next: NextFunction) : Promise <Response |void> => {
-        try {//busco en bd libros con estado "leyendo"
-            const libros = await Libro.traerPorEstado(EstadoLectura.Leyendo, req.user?.id);
-            res.json(libros); //devuelvo array de libros
+        try {
+            const libros = await Libro.traerPorEstado(EstadoLectura.Leyendo, req.user?.id as number);
+            res.json(libros);
         } catch (error) {
             next(error);
         }
     };
 
     public obtenerPorLeer = async (req: Request, res: Response, next: NextFunction) : Promise <Response |void> => {
-        try {//busco en bd libros con estado "por leer"
-            const libros = await Libro.traerPorEstado(EstadoLectura.PorLeer, req.user?.id);
-            
-            res.json(libros); //devuelvo array de libros
+        try {
+            const libros = await Libro.traerPorEstado(EstadoLectura.PorLeer, req.user?.id as number);
+            res.json(libros);
         } catch (error) {
             next(error);
         }
@@ -34,16 +33,13 @@ export class EstadoLibroController {
 
     public actualizarEstado = async (req: Request, res: Response, next: NextFunction) : Promise <Response |void> => {
         try {
-            // valido ID
             const id = parseInt(req.params.id, 10);
             if (isNaN(id)) {
                 throw Error('ID inválido');
             }
 
-            // Leo estado del body
             const { estado } = req.body as IActualizarEstado;
 
-            // valido que estado sea enum
             const estadosValidos = Object.values(EstadoLectura);
             if (!estado || !estadosValidos.includes(estado)) {
                 throw Error(`Estado inválido. Debe ser uno de: ${estadosValidos.join(', ')}`);
