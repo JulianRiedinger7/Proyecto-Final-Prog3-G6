@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import CalificarEstrellas from "../components/CalificacionStars";
 import ReseniaForm from "../components/ReseniaForm";
+import { useParams } from "react-router-dom";
 
 export default function DetalleLibro() {
-  const libroId = 1;
+  const { id } = useParams()
+  const libroId = id
 
   const [libro, setLibro] = useState<any>(null);
   const [puntaje, setPuntaje] = useState(0);

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import api from './api';
-import { obtenerLibro, actualizarResenia } from './detalleLibroService';
+import api from '../services/api';
+import { obtenerLibro, actualizarResenia } from '../services/detalleLibroService';
 
 vi.mock('./api');
 
