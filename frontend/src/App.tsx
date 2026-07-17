@@ -3,27 +3,20 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
-<<<<<<< HEAD
-=======
 import { GestionGenero } from './pages/GestionGenero.pages'
 import { BrowserRouter } from 'react-router-dom';
 
 
 
 
->>>>>>> dev
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-<<<<<<< HEAD
-    <>
-=======
     <BrowserRouter>
     <>
       <GestionGenero/>
->>>>>>> dev
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
@@ -129,14 +122,9 @@ function App() {
       </section>
 
       <div className="ticks"></div>
-<<<<<<< HEAD
-      <section id="spacer"></section>
-    </>
-=======
       <section id="spacer"></section>      
     </>    
     </BrowserRouter>
->>>>>>> dev
   )
 }
 
