@@ -2,6 +2,7 @@ import { LibrosController } from "../controllers/libros.controller";
 import { EstadoLibroController } from "../controllers/estado.libro.controller";
 import express, { Router } from "express";
 import { CalificacionController } from "../controllers/calificaciones.libros.controller";
+import { authMiddleware } from "../middleware/auth.middleware";
 
 export class LibrosRouter {
   private router: Router;
@@ -16,20 +17,20 @@ export class LibrosRouter {
     const estadoC: EstadoLibroController = new EstadoLibroController();
     const calificacionC: CalificacionController = new CalificacionController();
 
-    this.router.get("/portada/:id", libroC.getPortada);
-    this.router.get("/leidos", estadoC.obtenerLeidos);
-    this.router.get("/leyendo", estadoC.obtenerLeyendo);
-    this.router.get("/por-leer", estadoC.obtenerPorLeer);
+    this.router.get("/portada/:id", authMiddleware, libroC.getPortada);
+    this.router.get("/leidos", authMiddleware, estadoC.obtenerLeidos);
+    this.router.get("/leyendo", authMiddleware, estadoC.obtenerLeyendo);
+    this.router.get("/por-leer", authMiddleware, estadoC.obtenerPorLeer);
 
-    this.router.get("/mejor-calificados", calificacionC.getMejorCalificados);
-    this.router.patch("/:id/calificacion", calificacionC.actualizarCalificacion);
-    this.router.get("/", libroC.getLibros);
-    this.router.patch("/:id/actualizarresenia", libroC.patchResenia);
-    this.router.get("/:id", libroC.getPorId);
-    this.router.post("/", libroC.postLibro);
-    this.router.put("/:id", libroC.putLibro);
-    this.router.delete("/:id", libroC.borrarLibro);
-    this.router.patch("/:id/estado", estadoC.actualizarEstado);
+    this.router.get("/mejor-calificados", authMiddleware, calificacionC.getMejorCalificados);
+    this.router.patch("/:id/calificacion", authMiddleware, calificacionC.actualizarCalificacion);
+    this.router.get("/", authMiddleware, libroC.getLibros);
+    this.router.patch("/:id/actualizarresenia", authMiddleware, libroC.patchResenia);
+    this.router.get("/:id", authMiddleware, libroC.getPorId);
+    this.router.post("/", authMiddleware, libroC.postLibro);
+    this.router.put("/:id", authMiddleware, libroC.putLibro);
+    this.router.delete("/:id", authMiddleware, libroC.borrarLibro);
+    this.router.patch("/:id/estado", authMiddleware, estadoC.actualizarEstado);
   }
 
   public getRouter(): Router {
