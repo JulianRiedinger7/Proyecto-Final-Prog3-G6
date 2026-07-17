@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import api from '../services/api';
 import { obtenerLibro, actualizarResenia } from '../services/detalleLibroService';
 
-vi.mock('./api');
+vi.mock('../services/api');
 
 describe('obtenerLibro', () => {
   it('devuelve el libro cuando la request es exitosa', async () => {
