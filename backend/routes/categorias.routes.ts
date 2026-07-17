@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { CategoriasController } from "../controllers/categorias.controller";
+import { authMiddleware } from "../middleware/auth.middleware";
 
 export class CategoriasRouter {
   private router: Router;
@@ -11,10 +12,10 @@ export class CategoriasRouter {
 
   private rutasCategorias() {
     const categoriaController: CategoriasController = new CategoriasController();
-    this.router.get("/", categoriaController.getCategorias);
-    this.router.get("/:id", categoriaController.getCategoriaById);
-    this.router.post("/", categoriaController.postCategoria);
-    this.router.delete("/:id", categoriaController.deleteCategoria);
+    this.router.get("/", authMiddleware, categoriaController.getCategorias);
+    this.router.get("/:id", authMiddleware, categoriaController.getCategoriaById);
+    this.router.post("/", authMiddleware, categoriaController.postCategoria);
+    this.router.delete("/:id", authMiddleware, categoriaController.deleteCategoria);
   }
 
   public getRouter(): Router {
