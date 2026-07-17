@@ -58,7 +58,10 @@ export class LibrosController {
 
     try {
       codigo = 201;
-      salida = await Libro.crear(req.body);
+      salida = await Libro.crear({
+        ...req.body,
+        usuarioId: req.user?.id
+      });
       return res.status(codigo).json(salida);
     } catch (error) {
       next(error);
