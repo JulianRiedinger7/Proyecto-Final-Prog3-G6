@@ -10,6 +10,7 @@ import Enrutador from "../routes/index.routes";
 import { ErrorLibros } from "../middleware/error-libros-handler.middleware";
 import { ErrorUsuarios } from "../middleware/error-usuarios-handler.middleware";
 import { ErrorCategorias } from "../middleware/error-categorias-handler.middleware";
+import { ErrorAuth } from "../middleware/error-auth";
 
 //Clase Servidor
 export class Servidor {
@@ -69,6 +70,7 @@ export class Servidor {
     this.app.use(ErrorUsuarios.manejadorErrores);
     this.app.use(ErrorLibros.manejadorErrores);
     this.app.use(ErrorCategorias.manejadorErrores);
+    this.app.use(ErrorAuth.manejadorErrores);
     this.app.use(errorHandler);
   }
 
