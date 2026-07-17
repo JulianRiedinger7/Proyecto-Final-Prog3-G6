@@ -6,7 +6,7 @@ export class EstadoLibroController {
 
     public obtenerLeidos = async (req: Request, res: Response, next: NextFunction) : Promise <Response |void> => {
         try { //busco en bd libros con estado "leido"
-            const libros = await Libro.traerPorEstado(EstadoLectura.Leido);
+            const libros = await Libro.traerPorEstado(EstadoLectura.Leido, req.user?.id);
             res.json(libros); //devuelvo array de libros
         } catch (error) {
             next(error);
@@ -15,7 +15,7 @@ export class EstadoLibroController {
 
     public obtenerLeyendo = async (req: Request, res: Response, next: NextFunction) : Promise <Response |void> => {
         try {//busco en bd libros con estado "leyendo"
-            const libros = await Libro.traerPorEstado(EstadoLectura.Leyendo);
+            const libros = await Libro.traerPorEstado(EstadoLectura.Leyendo, req.user?.id);
             res.json(libros); //devuelvo array de libros
         } catch (error) {
             next(error);
@@ -24,7 +24,7 @@ export class EstadoLibroController {
 
     public obtenerPorLeer = async (req: Request, res: Response, next: NextFunction) : Promise <Response |void> => {
         try {//busco en bd libros con estado "por leer"
-            const libros = await Libro.traerPorEstado(EstadoLectura.PorLeer);
+            const libros = await Libro.traerPorEstado(EstadoLectura.PorLeer, req.user?.id);
             
             res.json(libros); //devuelvo array de libros
         } catch (error) {
