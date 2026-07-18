@@ -57,12 +57,12 @@ export class Categoria extends Model<ICategoria> implements ICategoria {
 
   static async actualizarCategoria(
       id: number,
-      libro: Partial<ICategoria>,
+      categoria: Partial<ICategoria>,
     ): Promise<ICategoria | null> {
       const categoriaBd: Categoria | null = await Categoria.findByPk(id);
       let salida: any = null;
       if (categoriaBd) {
-        await categoriaBd.update(libro);
+        await categoriaBd.update(categoria);
         await categoriaBd.reload();
         salida = categoriaBd;
       }
