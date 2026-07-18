@@ -1,4 +1,4 @@
-import { Libro } from "../services/detalleLibroService";
+import { type Libro } from "../services/detalleLibroService";
 
 interface LibroInfoProps {
   libro: Libro;
