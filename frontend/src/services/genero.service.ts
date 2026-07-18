@@ -19,8 +19,8 @@ export class generoService  {
 
     public static borrarGenero = async (id:number):Promise<void> => {
         try {
-            const respuesta: Response = await api.delete(`/categorias/${id}`);
-            if (!respuesta.ok) {
+            const respuesta: AxiosResponse = await api.delete(`/categorias/${id}`);
+            if (respuesta.status < 200 || respuesta.status >= 300) {
                 throw new Error(`Error ${respuesta.status}: ${respuesta.statusText}`);
             }
         } catch (error) {
@@ -30,17 +30,17 @@ export class generoService  {
 
     public static editarGenero = async (id:number, nombre:string):Promise<TipoRespuesta> => {
         let resultado: TipoRespuesta = {codigo:500, mensaje: "Error Inexpecifico"};
-        let respuesta: Response | undefined;
+        let respuesta: AxiosResponse | undefined;
 
         try {
-            respuesta = await api.put(`/categorias/${id}`,{nombre});
-            if (!respuesta?.ok) {
-                resultado.codigo = respuesta?.status ?? 500 ;
+            respuesta = await api.put(`/categorias/${id}`, { nombre });
+            if (!respuesta || respuesta.status < 200 || respuesta.status >= 300) {
+                resultado.codigo = respuesta?.status ?? 500;
                 resultado.mensaje = respuesta?.statusText ?? 'Error indefinido';
                 throw new Error(`Error ${resultado.codigo}: ${resultado.mensaje}`);
             }
             resultado.codigo = respuesta.status;
-            resultado.mensaje = respuesta.statusText;
+            resultado.mensaje = respuesta.statusText || 'OK';
         } catch (error) {
             resultado.codigo = respuesta?.status ?? 500;
             resultado.mensaje = respuesta?.statusText ?? (error instanceof Error ? error.message : 'Error Inexpecifico');
@@ -62,7 +62,7 @@ export class generoService  {
                 throw error;
             }
             respuesta = await api.get(`/categorias`);
-            if (respuesta.status != 200) {
+            if (respuesta.status >= 200 && respuesta.status < 300 ) {
                 generos = respuesta.data;
                 for (const genero of generos) {
                     if (genero.nombre.toUpperCase().trim() === nombre.toUpperCase().trim()) {
