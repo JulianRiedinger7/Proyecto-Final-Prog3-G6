@@ -10,7 +10,7 @@
     "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowJs": true,
-    "types": ["reflect-metadata"]
+    "types": ["reflect-metadata", "jest", "node"]
   },
   "include": ["./**/*.ts", "./**/*.js"],
   "exclude": ["node_modules", "dist"]
