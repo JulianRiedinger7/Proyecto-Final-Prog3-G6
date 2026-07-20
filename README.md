@@ -4,7 +4,6 @@ Proyecto base para el trabajo final de Programacion 3. Es una aplicacion web com
 
 Link render: https://proyecto-final-prog3-g6.onrender.com/api
 
-
 ## 👥 Integrantes - Grupo 6
 
 - Julieta Dabús
@@ -90,9 +89,12 @@ _Backend_
 - Actualización de traerTodos y encontrarPorId para incluir Usuario y Categoria en la respuesta
 
 _Backend (JWT)_
+
 - Instalación de bcryptjs + jsonwebtoken
+
 1. POST /api/usuarios/register → hashea la contraseña con bcrypt antes de guardar
 2. POST /api/usuarios/login → valida credenciales y devuelve token JWT
+
 - Middleware auth.middleware.ts — valida el token JWT recibido en el header Authorization:si falta, expiró o es inválido, corta la request con un error nombrado (401-TokenFaltante, 401-TokenExpirado, 401-TokenInvalido). Si es válido, decodifica el payload (id, mail, nombre) y lo inyecta en req.user para que los controladores sepan qué usuario está haciendo la request.
 - Middleware error-auth.ts — intercepta los errores nombrados que lanza auth.middleware.ts y responde con status 401 y el mensaje correspondiente; cualquier otro error lo delega al manejador general de errores.
 - Rutas protegidas con authMiddleware:
@@ -101,13 +103,13 @@ _Backend (JWT)_
   - Las rutas de /api/usuarios (register, login, y el resto) quedan sin authMiddleware, ya que register/login son necesariamente públicas para poder obtener el token
 
 _Frontend_
+
 - pages/Login.tsx — formulario completo
 - pages/Register.tsx — formulario de registro
 - context/AuthContext.tsx — guarda token en localStorage, expone login(), logout(), usuario
 - hooks/useAuth.ts — wrapper del contexto
 - components/ProtectedRoute.tsx — redirige a Login si no hay token
 - services/authService.ts — llamadas a register y login
-
 
 #### Matías F. Ledesma González
 
@@ -120,7 +122,7 @@ _Frontend_
   5. UltimoIncorporado: devuleve el título del último libro incorporado, sino existiera devuelve "-"
 
 - Función actualizarResenia()
-Esta función dentro de libro.models.ts encuentra el libro por ID y actualiza el atributo reseña (string) c on la nueva información incorporada por el usuario.
+  Esta función dentro de libro.models.ts encuentra el libro por ID y actualiza el atributo reseña (string) c on la nueva información incorporada por el usuario.
 
 #### Julián Riedinger
 
@@ -140,8 +142,39 @@ _Backend_
   4. DELETE /api/categorias/:id
 - Rutas asociadas a categorias-controller
 
+_Tests Unitarios Backend_
+
+- Test del modelo Categorias: categorias.model.test.ts
+- Test del controlador Categorias: categorias.controller.test.ts
+- Test del manejador de errores: error-handler.middleware.test.ts
+
+**Dashboard y Sección Mejor Calificados**  
+_Frontend_
+
+- Páginas:
+  1. dashboard.page.tsx — carga de estadísticas, libros y géneros en paralelo con Promise.all, filtrado por género en memoria
+  2. mejorCalificados.page.tsx
+- Componentes (components/common/):
+  1. statsCard.tsx
+  2. generoPill.tsx
+  3. bookCard.tsx
+- Utilidades:
+  1. utils/getPortada.util.ts — construcción de URL de portada desde Open Library con manejo de imagen inválida
+- Servicios:
+  1. services/estadisticas.service.ts
+
+_Tests Unitarios Frontend_
+
+- Test de páginas:
+  1. dashboard.page.test.tsx
+  2. mejorCalificados.page.test.tsx
+- Test de componentes:
+  1. components/common/statsCard.test.tsx
+  2. components/common/generoPill.test.tsx
+  3. components/common/bookCard.test.tsx
 
 #### Clara Zivano
+
 - Interfaz Usuario
 - Modelo Usuario
 - Seeder de Usuario (con 3 caso)
@@ -151,7 +184,6 @@ _Backend_
   3. POST /api/usuarios
   4. DELETE /api/usuarios/:id
 - Router Usuarios
-
 
 ## Metodologías utilizadas
 
@@ -284,24 +316,24 @@ proyecto/
 │   │   ├── categoria.model.ts
 │   │   ├── estadisticas.model.ts
 │   │   ├── usuario.model.ts
-│   │   └── libro.model.ts                  
+│   │   └── libro.model.ts
 │   ├── controllers/
 │   │   ├── calificaciones.libros.controller.ts
 │   │   ├── categorias.controller.ts
 │   │   ├── estadisticas.controller.ts
-│   │   ├── estado.libro.controller.ts  
+│   │   ├── estado.libro.controller.ts
 │   │   ├── usuarios.controller.ts
-│   │   └── libros.controller.ts        
+│   │   └── libros.controller.ts
 │   ├── middleware/
-│   │   ├── error-handler.middleware.js 
+│   │   ├── error-handler.middleware.js
 │   │   ├── error-categorias-handler.middleware.ts
 │   │   ├── error-usuarios-handler.middleware.ts
-|   |   └── error-libros-handler.middleware.ts 
+|   |   └── error-libros-handler.middleware.ts
 │   ├── routes/
 │   │   ├── index.routes.ts          # Router principal
 │   │   ├── categorias.routes.ts
 │   │   ├── usuarios.routes.ts
-│   │   └── libros.routes.ts         
+│   │   └── libros.routes.ts
 │   ├── seeders/                     # Datos de prueba
 │   │   ├── 20260614-seeder-usuarios.ts
 │   │   ├── 20260605145618-categoria.ts
@@ -309,11 +341,11 @@ proyecto/
 │   ├── core/                     # Contenedor del Core de la API
 |   |   └── server.ts
 │   └── interfaces/
-│       ├── dbConfig.interface.ts 
+│       ├── dbConfig.interface.ts
 │       ├── categoria.interface.ts
 │       ├── Estadistica.interface.ts
 │       ├── Libro.interface.ts
-│       └── Usuario.interface.ts    
+│       └── Usuario.interface.ts
 │
 └── frontend/
     └── TODO
