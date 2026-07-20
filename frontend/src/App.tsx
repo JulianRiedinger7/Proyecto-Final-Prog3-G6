@@ -5,7 +5,6 @@ import heroImg from "./assets/hero.png";
 import "./App.css";
 import { GestionGenero } from "./pages/GestionGenero.pages";
 import { BrowserRouter } from "react-router-dom";
-import { DashboardPage } from "./pages/dashboard.page";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -13,7 +12,6 @@ function App() {
   return (
     <BrowserRouter>
       <>
-        <DashboardPage />
         <GestionGenero />
         <section id="center">
           <div className="hero">
