@@ -6,9 +6,11 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import { sequelize } from "../models";
 import errorHandler from "../middleware/error-handler.middleware";
-import Enrutador from "../routes/index-routes";
-import { ErrorLibros } from "../middleware/error-libros-handler.middlerware";
-//import { LibroSeeder } from "../seeders/20260606-seeder-libro";
+import Enrutador from "../routes/index.routes";
+import { ErrorLibros } from "../middleware/error-libros-handler.middleware";
+import { ErrorUsuarios } from "../middleware/error-usuarios-handler.middleware";
+import { ErrorCategorias } from "../middleware/error-categorias-handler.middleware";
+import { ErrorAuth } from "../middleware/error-auth";
 
 //Clase Servidor
 export class Servidor {
@@ -35,6 +37,7 @@ export class Servidor {
     this.app.use(
       cors({
         origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+        methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
         credentials: true,
       }),
     );
@@ -64,7 +67,10 @@ export class Servidor {
   }
 
   private errores() {
+    this.app.use(ErrorUsuarios.manejadorErrores);
     this.app.use(ErrorLibros.manejadorErrores);
+    this.app.use(ErrorCategorias.manejadorErrores);
+    this.app.use(ErrorAuth.manejadorErrores);
     this.app.use(errorHandler);
   }
 
@@ -82,8 +88,10 @@ export class Servidor {
         console.log("✅ Database synchronized");
         const { LibroSeeder } = require("../seeders/20260606-seeder-libro");
         const { CategoriaSeeder } = require("../seeders/20260605145618-categorias");
-        await LibroSeeder.generarSeed();
+        const { UsuarioSeeder } = require ("../seeders/20260614-seeder-usuarios");
+        await UsuarioSeeder.generarSeed();
         await CategoriaSeeder.cargarCategorias();
+        await LibroSeeder.generarSeed();
       }
 
       this.app.listen(this.port, () => {

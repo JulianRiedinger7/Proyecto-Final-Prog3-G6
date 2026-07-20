@@ -2,8 +2,8 @@
 
 Proyecto base para el trabajo final de Programacion 3. Es una aplicacion web completa con frontend, backend, base de datos y servicios auxiliares, todo orquestado con Docker Compose.
 
-Link render:  
-Documentación Postman:
+Link render: https://proyecto-final-prog3-g6.onrender.com/api
+
 
 ## 👥 Integrantes - Grupo 6
 
@@ -46,15 +46,17 @@ _Backend_
 
 #### Marianela Belardinelli
 
-Agrega a src/interfaces/IBook.ts: IUpdateBookStatusDTO
-src/controllers/bookStatusController.ts
+**Estado de lectura**  
+_Backend_
 
-PATCH /api/libros/:id/estado — valida que sea por_leer, leyendo o leido
-GET /api/libros/leidos
-GET /api/libros/leyendo
-GET /api/libros/por-leer
-
-Agrega sus rutas a src/routes/books.ts
+- Interfaz agregada a Libro-interface.ts:
+  1. IActualizarEstado
+- Controlador bookStatusController.ts con los siguientes endpoints:
+  1. GET /api/libros/leidos
+  2. GET /api/libros/leyendo
+  3. GET /api/libros/por-leer
+  4. PATCH /api/libros/:id/estado — valida que el estado sea un valor del enum EstadoLectura (por leer, leyendo, leido)
+- Rutas agregadas a libros-routes.ts
 
 #### Julieta Dabús
 
@@ -62,10 +64,12 @@ Agrega sus rutas a src/routes/books.ts
 _Backend_
 
 - Controlador calificacion-libros-controller.ts con los siguientes endpoints:
+
 1. PATCH /api/libros/:id/calificacion — valida que sea entre 1 y 5
 2. GET /api/libros/mejor-calificados — devuelve libros con puntaje asignado, ordenados de mayor a menor
+
 - Rutas agregadas a libros-routes.ts
-- Relaciones FK definidas mediante decoradores @ForeingKey y @BelongsTo en el modelo Libro.ts: 
+- Relaciones FK definidas mediante decoradores @ForeingKey y @BelongsTo en el modelo Libro.ts:
   - usuarioId -> @ForeingKey (() => Usuario)
   - generoId -> @ForeingKey (() => Categoria)
 - Actualización de traerTodos y encontrarPorId para incluir Usuario y Categoria en la respuesta
@@ -92,43 +96,47 @@ _Frontend_
 
 #### Matías F. Ledesma González
 
-src/interfaces/IStats.ts — IBookStats
-src/controllers/bookReviewController.ts
+- Sección estadísticas (Estadistica.interface.ts, estadisticas.utils.ts y estadisticas.controller.ts)
+- Esta sección trabaja sobre la base de datos y devuelve un resumen con las siguientes variables (utils/estadisticas.utils.ts/Class Estadisticas):
+  1. TotalLibros: devuelve el número cargado en la base de datos
+  2. LibrosLeidos, LibrosLeyendo y LibrosPorLeer: devuelve el número de libros según cada estado
+  3. LeidoReciente: devuelve el título del último libro que estemos leyendo, sino existiera devuelve "-"
+  4. TerminadoReciente: devuelve el título del último libro terminado, sino existiera devuelve "-"
+  5. UltimoIncorporado: devuleve el título del último libro incorporado, sino existiera devuelve "-"
 
-PATCH /api/libros/:id/resena
-GET /api/libros/stats — devuelve IBookStats: total de libros, cantidad por cada estado, promedio de rating, género con más libros
-
-Agrega sus rutas a src/routes/books.ts
-Consolida el API_test.md grupal con los cURLs de todos
+- Función actualizarResenia()
+Esta función dentro de libro.models.ts encuentra el libro por ID y actualiza el atributo reseña (string) c on la nueva información incorporada por el usuario.
 
 #### Julián Riedinger
 
-src/interfaces/IGenre.ts — IGenre
-src/models/Genre.ts
-src/migrations/XXXX-create-genres.ts
-src/seeders/XXXX-demo-genres.ts — Ficción, No ficción, Ciencia ficción, Historia, Fantasía, Terror, Biografía
-src/controllers/genreController.ts
+**Entidad Categorias**  
+_Backend_
 
-GET /api/generos
-GET /api/generos/:id
-POST /api/generos
-DELETE /api/generos/:id
+- Interfaz Categorias
+- Modelo Categorias
+- Manejador de Errores Global: error-handler.middleware.ts
+- Manejador de Errores de Categoria
+- Fix en Delete de Libros para manejar error particular
+- Seeder Categorias
+- Controlador Categorias con los siguientes endpoints:
+  1. GET /api/categorias
+  2. GET /api/categorias/:id
+  3. POST /api/categorias
+  4. DELETE /api/categorias/:id
+- Rutas asociadas a categorias-controller
 
-src/routes/genres.ts
 
 #### Clara Zivano
+- Interfaz Usuario
+- Modelo Usuario
+- Seeder de Usuario (con 3 caso)
+- Controlador Usuario con los siguientes endpoints:
+  1. GET /api/usuarios
+  2. GET /api/usuarios/:id
+  3. POST /api/usuarios
+  4. DELETE /api/usuarios/:id
+- Router Usuarios
 
-src/interfaces/IUser.ts — IUser
-src/models/User.ts
-src/migrations/XXXX-create-users.ts
-src/seeders/XXXX-demo-users.ts — 3 usuarios de prueba
-src/controllers/userController.ts
-
-GET /api/usuarios
-GET /api/usuarios/:id
-POST /api/usuarios
-DELETE /api/usuarios/:id
-src/routes/users.ts
 
 ## Metodologías utilizadas
 
@@ -258,23 +266,39 @@ proyecto/
 │   │   └── database.ts              # Config de conexion a PostgreSQL
 │   ├── models/
 │   │   ├── index.ts                 # Inicializa Sequelize y registra modelos
-│   │   └── Libro.ts                  # Modelo de usuario (tiene TODOs)
+│   │   ├── categoria.model.ts
+│   │   ├── estadisticas.model.ts
+│   │   ├── usuario.model.ts
+│   │   └── libro.model.ts                  
 │   ├── controllers/
-│   │   ├── estado-libro-controller.ts  # Logica de manejo para los estados de Libros
-│   │   └── libros-controller.ts        # Logica de manejo para los libros
+│   │   ├── calificaciones.libros.controller.ts
+│   │   ├── categorias.controller.ts
+│   │   ├── estadisticas.controller.ts
+│   │   ├── estado.libro.controller.ts  
+│   │   ├── usuarios.controller.ts
+│   │   └── libros.controller.ts        
 │   ├── middleware/
-│   │   ├── error-handler.middleware.js # Manejador de errores Genericos
-|   |   └── error-libros-handler.middlerware.ts # Manejador de errores particulares del controller Libros-Controller.ts
+│   │   ├── error-handler.middleware.js 
+│   │   ├── error-categorias-handler.middleware.ts
+│   │   ├── error-usuarios-handler.middleware.ts
+|   |   └── error-libros-handler.middleware.ts 
 │   ├── routes/
-│   │   ├── index-routes.ts          # Router principal
-│   │   └── libros-routes.ts         # Rutas relacionada a los manejadores estado-libro y libros-controller
+│   │   ├── index.routes.ts          # Router principal
+│   │   ├── categorias.routes.ts
+│   │   ├── usuarios.routes.ts
+│   │   └── libros.routes.ts         
 │   ├── seeders/                     # Datos de prueba
-|   |   └── 20260606-seeder-libro.ts # Seeder para completar la tabla Libro
+│   │   ├── 20260614-seeder-usuarios.ts
+│   │   ├── 20260605145618-categoria.ts
+|   |   └── 20260606-seeder-libro.ts
 │   ├── core/                     # Contenedor del Core de la API
 |   |   └── server.ts
 │   └── interfaces/
-│       ├── dbConfig-interface.ts    # Interface de la configuracion a la Base de datos
-│       └── Libro-interface.ts       # Interfaz del Modelo Libro
+│       ├── dbConfig.interface.ts 
+│       ├── categoria.interface.ts
+│       ├── Estadistica.interface.ts
+│       ├── Libro.interface.ts
+│       └── Usuario.interface.ts    
 │
 └── frontend/
     └── TODO

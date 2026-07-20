@@ -1,17 +1,17 @@
-# frontend/Dockerfile
-FROM node:18-alpine
+FROM node:lts-alpine AS constructor
 
 WORKDIR /app
-
-# Instalar dependencias
+ARG VITE_API_URL=http://localhost:3001/api
+ENV CI=true
+ENV VITE_API_URL=${VITE_API_URL}
 COPY package*.json ./
-RUN npm install
-
-# Copiar código fuente
+RUN corepack enable pnpm
+RUN pnpm install
 COPY . .
+RUN pnpm run build
 
-# Exponer puerto
-EXPOSE 3000
+FROM nginx:alpine 
 
-# Comando por defecto
-CMD ["npm", "start"]
+COPY --from=constructor /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
