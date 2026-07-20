@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 @theme {
   /* Colores principales del diseño de Stitch */
   --color-primary: #1a3a2a;        /* verde oscuro — botones, sidebar activo */

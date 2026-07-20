@@ -30,7 +30,7 @@ export const GeneroItem = ({ genero, onEditar, onBorrar }: GeneroItemProps ) => 
     }
 
     return (
-       <li className="flex items-center justify-between px-6 py-4 m-0.5 bg-primary text-blanco hover:bg-primary-hover hover:text-text-light">
+       <li className="flex transition-transform duration-500 items-center justify-between px-6 py-4 m-0.5 bg-primary text-blanco hover:bg-primary-hover hover:text-text-light hover:scale-105">
         <div className="flex items-center gap-4 flex-1 min-w-0">
            <IconoLista faIcono="fa-bookmark"/>
            {editando? // Si se habilito la edicion muestro el input

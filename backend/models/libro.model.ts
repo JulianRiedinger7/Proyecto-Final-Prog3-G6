@@ -75,8 +75,9 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
     });
   }
 
-  static async traerTodos(): Promise<InterfaceLibro[] | []> {
+  static async traerTodos(usuarioId: number): Promise<InterfaceLibro[] | []> {
     return await Libro.findAll({
+      where: { usuarioId },
       include: [
         { model: Categoria, attributes: ["id", "nombre"] },
         { model: Usuario, attributes: ["id", "nombre"] },
@@ -112,8 +113,8 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
     return salida;
   }
 
-  static async contar(): Promise<number> {
-    return await Libro.count();
+  static async contar(usuarioId: number): Promise<number> {
+    return await Libro.count({ where: { usuarioId } });
   }
 
   static async getPortada(id: number): Promise<string | undefined> {
@@ -134,36 +135,38 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
     return salida;
   }
 
-  static async traerPorEstado(estado: EstadoLectura): Promise<InterfaceLibro[] | []> {
+  static async traerPorEstado(estado: EstadoLectura, usuarioId: number): Promise<InterfaceLibro[] | []> {
     return await Libro.findAll({
-      where: { estado: estado },
+      where: { estado: estado, usuarioId: usuarioId },
       include: [{ model: Categoria, attributes: ["id", "nombre"] }],
     });
   }
-  static async contarPorEstado(estado: EstadoLectura): Promise<number> {
-    return await Libro.count({ where: { estado } });
+
+  static async contarPorEstado(estado: EstadoLectura, usuarioId: number): Promise<number> {
+    return await Libro.count({ where: { estado, usuarioId } });
   }
 
-  static async terminadoRecientemente(): Promise<string | null> {
+  static async terminadoRecientemente(usuarioId: number): Promise<string | null> {
     const libroLeido = await Libro.findOne({
-      where: { estado: EstadoLectura.Leido },
+      where: { estado: EstadoLectura.Leido, usuarioId },
       order: [["updatedAt", "DESC"]],
       attributes: ["titulo"],
     });
     return libroLeido ? libroLeido.titulo : null;
   }
 
-  static async incorporadoRecientemente(): Promise<string | null> {
+  static async incorporadoRecientemente(usuarioId: number): Promise<string | null> {
     const libroIncorporado = await Libro.findOne({
+      where: { usuarioId },
       order: [["createdAt", "DESC"]],
       attributes: ["titulo"],
     });
     return libroIncorporado ? libroIncorporado.titulo : null;
   }
 
-  static async leyendoRecientemente(): Promise<string | null> {
+  static async leyendoRecientemente(usuarioId: number): Promise<string | null> {
     const libroLeyendo = await Libro.findOne({
-      where: { estado: EstadoLectura.Leyendo },
+      where: { estado: EstadoLectura.Leyendo, usuarioId },
       order: [["updatedAt", "DESC"]],
       attributes: ["titulo"],
     });

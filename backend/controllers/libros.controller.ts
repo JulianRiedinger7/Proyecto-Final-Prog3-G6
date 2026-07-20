@@ -13,7 +13,7 @@ export class LibrosController {
 
     try {
       codigo = 200;
-      salida = await Libro.traerTodos();
+      salida = await Libro.traerTodos(req.user?.id as number);
       if (!salida || salida.length === 0) {
         error = new Error("Ups! Parece que tenemos de todo menos libros :(");
         error.name = "404-Libros";
@@ -58,7 +58,10 @@ export class LibrosController {
 
     try {
       codigo = 201;
-      salida = await Libro.crear(req.body);
+      salida = await Libro.crear({
+        ...req.body,
+        usuarioId: req.user?.id
+      });
       return res.status(codigo).json(salida);
     } catch (error) {
       next(error);

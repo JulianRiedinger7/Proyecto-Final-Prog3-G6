@@ -74,4 +74,23 @@ export class CategoriasController {
       next(error);
     }
   };
+
+   public putCategoria = async (
+      req: Request,
+      res: Response,
+      next: NextFunction,
+    ): Promise<Response | void> => {
+      try {
+        const categoriaActualizada = await Categoria.actualizarCategoria(Number(req.params.id), req.body);
+        if (!categoriaActualizada) {
+          const error = new Error(`No se encontró la categoría con ID ${req.params.id}`);
+          error.name = "404-IdCategoria";
+          throw error;
+        }
+        return res.status(200).json(categoriaActualizada);
+      } catch (error) {
+        next(error);
+      }
+    };
+  
 }

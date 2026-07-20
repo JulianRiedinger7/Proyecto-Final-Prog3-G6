@@ -4,6 +4,7 @@ import { CategoriasRouter } from "./categorias.routes";
 import { EstadisticasController } from "../controllers/estadisticas.controller";
 import { LibrosController } from "../controllers/libros.controller";
 import { UsuariosRouter } from "./usuarios.routes";
+import { authMiddleware } from "../middleware/auth.middleware";
 
 export default class Enrutador {
   private router: Router;
@@ -30,7 +31,7 @@ export default class Enrutador {
 
   private rutaLibros() {
     this.router.use("/libros", new LibrosRouter().getRouter());
-    this.router.get("/estadisticas", new EstadisticasController().getEstadisticas);
+    this.router.get("/estadisticas", authMiddleware, new EstadisticasController().getEstadisticas);
   }
 
   private rutaCategorias() {
