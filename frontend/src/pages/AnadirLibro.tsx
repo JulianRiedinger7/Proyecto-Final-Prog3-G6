@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { librosService } from "../services/libro.service";
 import { type Libro } from "../types/Libro.type";
-import { EstadoSelector } from "../components/common/Estado.Selector";
+import { EstadoSelector } from "../components/common/Estado.selector";
 import { GeneroDropdown } from "../components/common/Genero.dropdown";
 
 export function AnadirLibro() {
