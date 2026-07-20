@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Libro } from "../../types/Libro.type";
 import { getPortadaUrl } from "../../utils/getPortada.util";
+import CalificarEstrellas from "../CalificacionStars";
 
 interface BookCardProps {
   libro: Libro;
@@ -16,14 +17,6 @@ export const BookCard = ({ libro }: BookCardProps) => {
     if (img.naturalWidth <= 1 || img.naturalHeight <= 1) {
       setError(true);
     }
-  };
-
-  const loadRating = (puntaje: number = 0) => {
-    const stars = [];
-    for (let i = 0; i < puntaje; i++) {
-      stars.push(<span key={i} className="text-yellow-500 fa-solid fa-star"></span>);
-    }
-    return stars;
   };
 
   return (
@@ -45,7 +38,7 @@ export const BookCard = ({ libro }: BookCardProps) => {
       </h3>
       <p className="text-lg mt-5 tracking-wide">{libro.titulo}</p>
       <p className="text-sm mt-2 italic font-light">{libro.autor}</p>
-      {loadRating(libro.puntaje ? Number(libro.puntaje) : 1)}
+      <CalificarEstrellas puntaje={libro.puntaje ? Number(libro.puntaje) : 0} onChange={() => {}} />
     </div>
   );
 };
