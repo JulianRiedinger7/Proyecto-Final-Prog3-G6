@@ -58,6 +58,21 @@ _Backend_
   4. PATCH /api/libros/:id/estado — valida que el estado sea un valor del enum EstadoLectura (por leer, leyendo, leido)
 - Rutas agregadas a libros-routes.ts
 
+_Frontend_
+
+- Tipos agregados a src/types/Libro.type.ts: Libro
+- Service src/services/libro.service.ts con los siguientes métodos:
+  1. getLibros — GET /api/libros
+  2. getLibroPorId — GET /api/libros/:id
+  3. crearLibro — POST /api/libros
+  4. editarLibro — PUT /api/libros/:id
+  5. eliminarLibro — DELETE /api/libros/:id
+- Componente reutilizable src/components/common/EstadoSelector.tsx — 3 botones Por leer / Leyendo / Leído
+- Componente src/components/common/Genero.Dropdow.tsx — selector de géneros cargados desde la API
+- Página src/pages/AnadirLibro.tsx — formulario completo para crear un libro con validaciones
+- Página src/pages/Biblioteca.tsx — grilla de libros con filtros por estado
+- Tests unitarios
+
 #### Julieta Dabús
 
 **Califaciones y Relaciones FK; Auth Frontend + JWT Backend (Register/Login)**
