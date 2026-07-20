@@ -5,16 +5,16 @@ import { GeneroLista } from './Genero.lista';
 
 interface GeneroItemMockProps {
   genero: Genero;
-  onEditar: () => void;
-  onBorrar: () => void;
+  onEditar: (id: number, nuevoNombre: string) => void;
+  onBorrar: (id: number) => void;
 }
 
 vi.mock('./GeneroItem.lista', () => ({
   GeneroItem: ({ genero, onEditar, onBorrar }: GeneroItemMockProps) => (
     <li>
       <span>{genero.nombre}</span>
-      <button onClick={onEditar}>Editar {genero.nombre}</button>
-      <button onClick={onBorrar}>Borrar {genero.nombre}</button>
+      <button onClick={() => onEditar(genero.id, genero.nombre)}>Editar {genero.nombre}</button>
+      <button onClick={() => onBorrar(genero.id)}>Borrar {genero.nombre}</button>
     </li>
   ),
 }));
