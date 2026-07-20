@@ -55,40 +55,6 @@ export class UsuariosController {
         }
     };
 
-    //Deprecado: usar postRegister que hashea la constraseña antes de guardarla en la base de datos
-    //Se mantiene solo si necesitan altas de usuarios sin contraseñas hasheadas
-    /*public postUsuario = async (
-        req: Request,
-        res: Response,
-        next: NextFunction
-    ): Promise<Response | void> => {
-        let codigo: number = 400;
-        let salida: object;
-        let error: Error;
-
-        try {
-            const { nombre, contrasenia, mail } = req.body;
-
-            if (!nombre || !contrasenia || !mail) {
-                error = new Error("Faltan datos del usuario");
-                error.name = "400-Usuario";
-                throw error;
-            }
-
-            codigo = 201;
-            salida = await Usuario.crear({
-                nombre,
-                contrasenia,
-                mail
-            } as any);
-
-            return res.status(codigo).json(salida);
-
-        } catch (error) {
-            next(error);
-        }
-    };*/
-
     public deleteUsuario = async (
         req: Request,
         res: Response,
