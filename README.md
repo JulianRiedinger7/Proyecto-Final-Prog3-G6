@@ -58,7 +58,7 @@ Agrega sus rutas a src/routes/books.ts
 
 #### Julieta Dabús
 
-**Califaciones y Relaciones FK**
+**Califaciones y Relaciones FK; Auth Frontend + JWT Backend (Register/Login)**
 _Backend_
 
 - Controlador calificacion-libros-controller.ts con los siguientes endpoints:
@@ -69,6 +69,26 @@ _Backend_
   - usuarioId -> @ForeingKey (() => Usuario)
   - generoId -> @ForeingKey (() => Categoria)
 - Actualización de traerTodos y encontrarPorId para incluir Usuario y Categoria en la respuesta
+
+_Backend (JWT)_
+- Instalación de bcryptjs + jsonwebtoken
+1. POST /api/usuarios/register → hashea la contraseña con bcrypt antes de guardar
+2. POST /api/usuarios/login → valida credenciales y devuelve token JWT
+- Middleware auth.middleware.ts — valida el token JWT recibido en el header Authorization:si falta, expiró o es inválido, corta la request con un error nombrado (401-TokenFaltante, 401-TokenExpirado, 401-TokenInvalido). Si es válido, decodifica el payload (id, mail, nombre) y lo inyecta en req.user para que los controladores sepan qué usuario está haciendo la request.
+- Middleware error-auth.ts — intercepta los errores nombrados que lanza auth.middleware.ts y responde con status 401 y el mensaje correspondiente; cualquier otro error lo delega al manejador general de errores.
+- Rutas protegidas con authMiddleware:
+  - Todas las rutas de /api/libros (incluidas mejor-calificados, :id/calificacion, portada/:id, leidos, leyendo, por-leer, :id/actualizarresenia, :id/estado)
+  - Todas las rutas de /api/categorias /api/estadisticas
+  - Las rutas de /api/usuarios (register, login, y el resto) quedan sin authMiddleware, ya que register/login son necesariamente públicas para poder obtener el token
+
+_Frontend_
+- pages/Login.tsx — formulario completo
+- pages/Register.tsx — formulario de registro
+- context/AuthContext.tsx — guarda token en localStorage, expone login(), logout(), usuario
+- hooks/useAuth.ts — wrapper del contexto
+- components/ProtectedRoute.tsx — redirige a Login si no hay token
+- services/authService.ts — llamadas a register y login
+
 
 #### Matías F. Ledesma González
 
