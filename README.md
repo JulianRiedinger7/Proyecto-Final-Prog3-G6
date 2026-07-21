@@ -19,9 +19,7 @@ Link render: https://proyecto-final-prog3-g6.onrender.com/api
 
 #### Alejandro Lucas Baldres
 
-**Entidad Libro**  
 _Backend_
-
 - Interfaces:
   1. Libro-interface: _Solo InterfaceLibro_
   2. dbConfig-interface
@@ -42,6 +40,62 @@ _Backend_
   1. App.ts
   2. Server.ts
   3. database.ts
+- Fix:
+  1. Configuracion CORS
+- Metodo PUT en Controlador Categorias
+- Metodo de Editar categoria Model Categorias
+
+- Test Unitarios
+  1. libro.model.test
+  2. libros.controller
+  3. error-libros-handler.middleware
+
+- Test de Integracion
+  1. index.routes (Solo lo que corresponde al los enpoints desarrollados por el alumno y el health)
+  2. libros.routes (Solo lo que corresponde al los enpoints desarrollados por el alumno)
+
+- Docs:
+  1. APIT_test.md
+
+_Frontend_
+- Componentes:
+  1. common/Genero.agregar
+  2. common/GeneroItem.lista
+  3. common/Genero.lista
+  4. common/Genero.titulo
+  5. ui/Boton.atras
+  6. ui/Boton.generico
+  7. ui/Icono.lista
+  8. ui/InputEdicion.lista
+  9. common/Error.mensaje
+  10. ui/Boton.lista
+
+
+- Paginas:
+  1. GestionGenero.pages
+
+- Servicios:
+  1. Genero.service
+
+- Tipos:
+  1. Genero.type
+  2. Respuesta.type
+
+- Test Unitarios
+ 1. Error.mensaje.test
+ 2. Genero.agregar.test
+ 3. Genero.lista.test
+ 4. GeneroItem.lista.test
+ 5. Boton.atras.test
+ 6. Boton.generico.test
+ 7. Boton.lista.test
+ 8. InputEdicion.lista.test
+ 9. GestionGenero.pages.test
+
+- CI/CD:
+  1. Dockerfiles
+  2. docker-compose
+
 
 #### Marianela Belardinelli
 
