@@ -3,12 +3,12 @@ import { Libro } from '../models/libro.model';
 import { EstadoLectura } from '../interfaces/Libro.interface';
 import { Request, Response, NextFunction } from 'express';
 
-// Mockea el modelo Libro
+
 jest.mock('../models/libro.model');
 
 const controller = new EstadoLibroController();
 
-// Helpers para crear mocks de req, res, next
+
 const mockReq = (params = {}, body = {}, user = { id: 1 }) => ({
     params,
     body,
