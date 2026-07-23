@@ -8,12 +8,14 @@ import { StatsCard } from "../components/common/statsCard";
 import { BookCard } from "../components/common/bookCard";
 import { Link } from "react-router-dom";
 import { GeneroPill } from "../components/common/generoPill";
+import { useAuth } from "../hooks/useAuth";
 
 export const DashboardPage = () => {
   const [estadisticas, setEstadisticas] = useState<Estadisticas | null>(null);
   const [libros, setLibros] = useState<Libro[]>([]);
   const [generos, setGeneros] = useState<Genero[]>([]);
   const [generoSeleccionado, setGeneroSeleccionado] = useState<number>(0);
+  const { usuario } = useAuth();
 
   useEffect(() => {
     const fetchDatos = async () => {
@@ -46,7 +48,13 @@ export const DashboardPage = () => {
 
   return (
     <section>
-      <h1 className="text-5xl text-primary m-4 font-bold">Dashboard</h1>
+      <h1 className="text-5xl text-primary m-4 font-bold">
+        Bienvenido de vuelta,
+        {usuario && (
+          <span className="italic tracking-wider text-accent"> {usuario.nombre.toUpperCase()}</span>
+        )}
+        !
+      </h1>
       {estadisticas ? (
         <div className="flex flex-col justify-center items-center md:flex-row">
           <StatsCard titulo="Total Libros" valor={estadisticas.TotalLibros} />
