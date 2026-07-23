@@ -4,7 +4,6 @@ Proyecto base para el trabajo final de Programacion 3. Es una aplicacion web com
 
 Link render: https://proyecto-final-prog3-g6.onrender.com/api
 
-
 ## 👥 Integrantes - Grupo 6
 
 - Julieta Dabús
@@ -20,9 +19,7 @@ Link render: https://proyecto-final-prog3-g6.onrender.com/api
 
 #### Alejandro Lucas Baldres
 
-**Entidad Libro**  
 _Backend_
-
 - Interfaces:
   1. Libro-interface: _Solo InterfaceLibro_
   2. dbConfig-interface
@@ -43,6 +40,62 @@ _Backend_
   1. App.ts
   2. Server.ts
   3. database.ts
+- Fix:
+  1. Configuracion CORS
+- Metodo PUT en Controlador Categorias
+- Metodo de Editar categoria Model Categorias
+
+- Test Unitarios
+  1. libro.model.test
+  2. libros.controller
+  3. error-libros-handler.middleware
+
+- Test de Integracion
+  1. index.routes (Solo lo que corresponde al los enpoints desarrollados por el alumno y el health)
+  2. libros.routes (Solo lo que corresponde al los enpoints desarrollados por el alumno)
+
+- Docs:
+  1. APIT_test.md
+
+_Frontend_
+- Componentes:
+  1. common/Genero.agregar
+  2. common/GeneroItem.lista
+  3. common/Genero.lista
+  4. common/Genero.titulo
+  5. ui/Boton.atras
+  6. ui/Boton.generico
+  7. ui/Icono.lista
+  8. ui/InputEdicion.lista
+  9. common/Error.mensaje
+  10. ui/Boton.lista
+
+
+- Paginas:
+  1. GestionGenero.pages
+
+- Servicios:
+  1. Genero.service
+
+- Tipos:
+  1. Genero.type
+  2. Respuesta.type
+
+- Test Unitarios
+ 1. Error.mensaje.test
+ 2. Genero.agregar.test
+ 3. Genero.lista.test
+ 4. GeneroItem.lista.test
+ 5. Boton.atras.test
+ 6. Boton.generico.test
+ 7. Boton.lista.test
+ 8. InputEdicion.lista.test
+ 9. GestionGenero.pages.test
+
+- CI/CD:
+  1. Dockerfiles
+  2. docker-compose
+
 
 #### Marianela Belardinelli
 
@@ -58,9 +111,24 @@ _Backend_
   4. PATCH /api/libros/:id/estado — valida que el estado sea un valor del enum EstadoLectura (por leer, leyendo, leido)
 - Rutas agregadas a libros-routes.ts
 
+_Frontend_
+
+- Tipos agregados a src/types/Libro.type.ts: Libro
+- Service src/services/libro.service.ts con los siguientes métodos:
+  1. getLibros — GET /api/libros
+  2. getLibroPorId — GET /api/libros/:id
+  3. crearLibro — POST /api/libros
+  4. editarLibro — PUT /api/libros/:id
+  5. eliminarLibro — DELETE /api/libros/:id
+- Componente reutilizable src/components/common/EstadoSelector.tsx — 3 botones Por leer / Leyendo / Leído
+- Componente src/components/common/Genero.Dropdow.tsx — selector de géneros cargados desde la API
+- Página src/pages/AnadirLibro.tsx — formulario completo para crear un libro con validaciones
+- Página src/pages/Biblioteca.tsx — grilla de libros con filtros por estado
+- Tests unitarios
+
 #### Julieta Dabús
 
-**Califaciones y Relaciones FK**  
+**Califaciones y Relaciones FK; Auth Frontend + JWT Backend (Register/Login)**
 _Backend_
 
 - Controlador calificacion-libros-controller.ts con los siguientes endpoints:
@@ -74,6 +142,29 @@ _Backend_
   - generoId -> @ForeingKey (() => Categoria)
 - Actualización de traerTodos y encontrarPorId para incluir Usuario y Categoria en la respuesta
 
+_Backend (JWT)_
+
+- Instalación de bcryptjs + jsonwebtoken
+
+1. POST /api/usuarios/register → hashea la contraseña con bcrypt antes de guardar
+2. POST /api/usuarios/login → valida credenciales y devuelve token JWT
+
+- Middleware auth.middleware.ts — valida el token JWT recibido en el header Authorization:si falta, expiró o es inválido, corta la request con un error nombrado (401-TokenFaltante, 401-TokenExpirado, 401-TokenInvalido). Si es válido, decodifica el payload (id, mail, nombre) y lo inyecta en req.user para que los controladores sepan qué usuario está haciendo la request.
+- Middleware error-auth.ts — intercepta los errores nombrados que lanza auth.middleware.ts y responde con status 401 y el mensaje correspondiente; cualquier otro error lo delega al manejador general de errores.
+- Rutas protegidas con authMiddleware:
+  - Todas las rutas de /api/libros (incluidas mejor-calificados, :id/calificacion, portada/:id, leidos, leyendo, por-leer, :id/actualizarresenia, :id/estado)
+  - Todas las rutas de /api/categorias /api/estadisticas
+  - Las rutas de /api/usuarios (register, login, y el resto) quedan sin authMiddleware, ya que register/login son necesariamente públicas para poder obtener el token
+
+_Frontend_
+
+- pages/Login.tsx — formulario completo
+- pages/Register.tsx — formulario de registro
+- context/AuthContext.tsx — guarda token en localStorage, expone login(), logout(), usuario
+- hooks/useAuth.ts — wrapper del contexto
+- components/ProtectedRoute.tsx — redirige a Login si no hay token
+- services/authService.ts — llamadas a register y login
+
 #### Matías F. Ledesma González
 
 - Sección estadísticas (Estadistica.interface.ts, estadisticas.utils.ts y estadisticas.controller.ts)
@@ -85,7 +176,7 @@ _Backend_
   5. UltimoIncorporado: devuleve el título del último libro incorporado, sino existiera devuelve "-"
 
 - Función actualizarResenia()
-Esta función dentro de libro.models.ts encuentra el libro por ID y actualiza el atributo reseña (string) c on la nueva información incorporada por el usuario.
+  Esta función dentro de libro.models.ts encuentra el libro por ID y actualiza el atributo reseña (string) c on la nueva información incorporada por el usuario.
 
 #### Julián Riedinger
 
@@ -105,8 +196,39 @@ _Backend_
   4. DELETE /api/categorias/:id
 - Rutas asociadas a categorias-controller
 
+_Tests Unitarios Backend_
+
+- Test del modelo Categorias: categorias.model.test.ts
+- Test del controlador Categorias: categorias.controller.test.ts
+- Test del manejador de errores: error-handler.middleware.test.ts
+
+**Dashboard y Sección Mejor Calificados**  
+_Frontend_
+
+- Páginas:
+  1. dashboard.page.tsx — carga de estadísticas, libros y géneros en paralelo con Promise.all, filtrado por género en memoria
+  2. mejorCalificados.page.tsx
+- Componentes (components/common/):
+  1. statsCard.tsx
+  2. generoPill.tsx
+  3. bookCard.tsx
+- Utilidades:
+  1. utils/getPortada.util.ts — construcción de URL de portada desde Open Library con manejo de imagen inválida
+- Servicios:
+  1. services/estadisticas.service.ts
+
+_Tests Unitarios Frontend_
+
+- Test de páginas:
+  1. dashboard.page.test.tsx
+  2. mejorCalificados.page.test.tsx
+- Test de componentes:
+  1. components/common/statsCard.test.tsx
+  2. components/common/generoPill.test.tsx
+  3. components/common/bookCard.test.tsx
 
 #### Clara Zivano
+
 - Interfaz Usuario
 - Modelo Usuario
 - Seeder de Usuario (con 3 caso)
@@ -116,7 +238,6 @@ _Backend_
   3. POST /api/usuarios
   4. DELETE /api/usuarios/:id
 - Router Usuarios
-
 
 ## Metodologías utilizadas
 
@@ -249,24 +370,24 @@ proyecto/
 │   │   ├── categoria.model.ts
 │   │   ├── estadisticas.model.ts
 │   │   ├── usuario.model.ts
-│   │   └── libro.model.ts                  
+│   │   └── libro.model.ts
 │   ├── controllers/
 │   │   ├── calificaciones.libros.controller.ts
 │   │   ├── categorias.controller.ts
 │   │   ├── estadisticas.controller.ts
-│   │   ├── estado.libro.controller.ts  
+│   │   ├── estado.libro.controller.ts
 │   │   ├── usuarios.controller.ts
-│   │   └── libros.controller.ts        
+│   │   └── libros.controller.ts
 │   ├── middleware/
-│   │   ├── error-handler.middleware.js 
+│   │   ├── error-handler.middleware.js
 │   │   ├── error-categorias-handler.middleware.ts
 │   │   ├── error-usuarios-handler.middleware.ts
-|   |   └── error-libros-handler.middleware.ts 
+|   |   └── error-libros-handler.middleware.ts
 │   ├── routes/
 │   │   ├── index.routes.ts          # Router principal
 │   │   ├── categorias.routes.ts
 │   │   ├── usuarios.routes.ts
-│   │   └── libros.routes.ts         
+│   │   └── libros.routes.ts
 │   ├── seeders/                     # Datos de prueba
 │   │   ├── 20260614-seeder-usuarios.ts
 │   │   ├── 20260605145618-categoria.ts
@@ -274,11 +395,11 @@ proyecto/
 │   ├── core/                     # Contenedor del Core de la API
 |   |   └── server.ts
 │   └── interfaces/
-│       ├── dbConfig.interface.ts 
+│       ├── dbConfig.interface.ts
 │       ├── categoria.interface.ts
 │       ├── Estadistica.interface.ts
 │       ├── Libro.interface.ts
-│       └── Usuario.interface.ts    
+│       └── Usuario.interface.ts
 │
 └── frontend/
     └── TODO

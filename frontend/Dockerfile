@@ -1,7 +1,7 @@
 FROM node:lts-alpine AS constructor
 
 WORKDIR /app
-ARG VITE_API_URL=http://localhost:3001/api
+ARG VITE_API_URL
 ENV CI=true
 ENV VITE_API_URL=${VITE_API_URL}
 COPY package*.json ./
