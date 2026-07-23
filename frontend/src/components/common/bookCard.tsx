@@ -20,7 +20,7 @@ export const BookCard = ({ libro }: BookCardProps) => {
   };
 
   return (
-    <div className="bg-secondary text-primary  p-6 rounded-lg shadow-md m-4 w-64 font-semibold hover:bg-accent transition-colors duration-300 hover:text-secondary uppercase md:h-130">
+    <div className="bg-secondary text-primary p-6 rounded-lg shadow-md m-4 w-64 font-semibold hover:bg-accent transition-colors duration-300 hover:text-secondary uppercase md:h-130 flex flex-col">
       <div className="relative mt-4">
         <img
           src={error ? "/book-cover-placeholder.png" : getPortadaUrl(libro.portada, "M")}
@@ -33,12 +33,19 @@ export const BookCard = ({ libro }: BookCardProps) => {
           {libro.estado}
         </span>
       </div>
-      <h3 className="text-xs mt-4 tracking-widest text-gray-500 italic">
-        {libro.categoria?.nombre}
-      </h3>
-      <p className="text-lg mt-5 tracking-wide">{libro.titulo}</p>
-      <p className="text-sm mt-2 italic font-light">{libro.autor}</p>
-      <CalificarEstrellas puntaje={libro.puntaje ? Number(libro.puntaje) : 0} onChange={() => {}} />
+
+      <div className="mt-4 flex flex-1 flex-col">
+        <h3 className="text-xs tracking-widest text-gray-500 italic">{libro.categoria?.nombre}</h3>
+
+        <p className="text-lg mt-2 tracking-wide min-h-18">{libro.titulo}</p>
+
+        <p className="text-sm mt-2 italic font-light">{libro.autor}</p>
+
+        <CalificarEstrellas
+          puntaje={libro.puntaje ? Number(libro.puntaje) : 0}
+          onChange={() => {}}
+        />
+      </div>
     </div>
   );
 };
