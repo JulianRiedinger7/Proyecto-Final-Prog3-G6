@@ -285,19 +285,18 @@ C. Documentación (Docs) Si la tarea consiste en generar o modificar documentaci
 ## Arquitectura General
 
 ```
-    (Por                (Por
-implementar)        implementar)
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│   Caddy     │    │   React     │    │   Express   │
-│  (Proxy)    │◄──►│ (Frontend)  │◄──►│  (Backend)  │
-│   :80       │    │   :3000     │    │   :3001     │
-└─────────────┘    └─────────────┘    └─────────────┘
-                                              │
-                                      ┌─────────────┐
-                                      │ PostgreSQL  │
-                                      │    (DB)     │
-                                      │   :5432     │
-                                      └─────────────┘
+
+┌─────────────┐    ┌─────────────┐
+│   React     │    │   Express   │
+│ (Frontend)  │◄──►│  (Backend)  │
+│   :3000     │    │   :3001     │
+└─────────────┘    └─────────────┘
+                           │
+                   ┌─────────────┐
+                   │ PostgreSQL  │
+                   │    (DB)     │
+                   │   :5432     │
+                   └─────────────┘
 ```
 
 Todos los servicios corren dentro de contenedores Docker y se comunican a traves de una red interna (`app_network`). Caddy actua como reverse proxy: recibe todo el trafico en el puerto 80 y lo redirige al frontend o al backend segun la URL.
