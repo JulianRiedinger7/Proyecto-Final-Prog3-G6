@@ -5,19 +5,13 @@ interface CalificacionProps {
 
 export default function CalificarEstrellas({ puntaje, onChange }: CalificacionProps) {
   return (
-    <div>
+    <div className="flex gap-2">
       {[1, 2, 3, 4, 5].map((estrella) => (
         <button
           key={estrella}
           type="button"
           onClick={() => onChange(estrella)}
-          style={{
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "2rem",
-            color: estrella <= puntaje ? "gold" : "lightgray",
-          }}
+          className={`text-3xl transition-colors ${estrella <= puntaje ? "text-accent" : "text-gray-300"}`}
         >
           ★
         </button>
