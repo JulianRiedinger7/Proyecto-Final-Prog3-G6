@@ -81,6 +81,12 @@ _Backend (JWT)_
   - Todas las rutas de /api/categorias /api/estadisticas
   - Las rutas de /api/usuarios (register, login, y el resto) quedan sin authMiddleware, ya que register/login son necesariamente públicas para poder obtener el token
 
+_Tests Unitarios Backend:_
+- Test del controlador de calificaciones: calificaciones.libros.controller.test.ts
+- Test del controlador de usuarios (register y login): usuarios.controller.test.ts
+- Test del middleware de autenticación: auth.middleware.test.ts
+- Test del manejador de errores de auth: error-auth.test.ts
+
 _Frontend_
 - pages/Login.tsx — formulario completo
 - pages/Register.tsx — formulario de registro
@@ -89,6 +95,12 @@ _Frontend_
 - components/ProtectedRoute.tsx — redirige a Login si no hay token
 - services/authService.ts — llamadas a register y login
 
+_Tests Unitarios Frontend_
+
+- Test del servicio de auth: authService.test.ts
+- Test del contexto de auth: AuthContext.test.tsx
+- Test del hook useAuth: useAuth.test.tsx
+- Test de la ruta protegida: ProtectedRoute.test.tsx
 
 #### Matías F. Ledesma González
 
