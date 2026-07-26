@@ -1,4 +1,5 @@
 import { obtenerLibrosLeyendo } from "../services/estadisticas.service";
+import { useNavigate } from "react-router-dom";
 import { generoService } from "../services/genero.service";
 import { useEffect, useState } from "react";
 import type { Libro } from "../types/Libro.type";
@@ -13,6 +14,7 @@ export const DashboardPage = () => {
   const [generos, setGeneros] = useState<Genero[]>([]);
   const [generoSeleccionado, setGeneroSeleccionado] = useState<number>(0);
   const { usuario } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDatos = async () => {
@@ -80,7 +82,13 @@ export const DashboardPage = () => {
 
           <ul className="flex flex-col items-center md:flex-row md:flex-wrap justify-center">
             {librosFiltrados.map((libro) => (
-              <BookCard key={libro.id} libro={libro} />
+              <div
+                key={libro.id}
+                onClick={() => navigate(`/libros/${libro.id}`)}
+                className="cursor-pointer"
+              >
+                <BookCard libro={libro} />
+              </div>
             ))}
           </ul>
         </div>
