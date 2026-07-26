@@ -75,13 +75,12 @@ export class Libro extends Model<InterfaceLibro> implements InterfaceLibro {
     });
   }
 
-  static async traerTodos(usuarioId: number): Promise<InterfaceLibro[] | []> {
-    return await Libro.findAll({
-      where: { usuarioId },
+  static async traerTodos(): Promise<InterfaceLibro[] | []> {
+    return await Libro.findAll({      
       include: [
         { model: Categoria, attributes: ["id", "nombre"] },
         { model: Usuario, attributes: ["id", "nombre"] },
-      ],
+      ]
     });
   }
 
