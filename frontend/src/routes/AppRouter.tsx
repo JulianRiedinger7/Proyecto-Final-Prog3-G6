@@ -7,15 +7,17 @@ import DetalleLibro from "../pages/DetalleLibro";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import { MainLayout } from "../components/layout/MainLayout";
 import { Register } from "../pages/register";
+import { DashboardPage } from "../pages/dashboard.page";
 
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/biblioteca" replace />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
       <Route path="/login" element={<Login />} />
 
       <Route path="/registros" element={<Register />} />
+
 
       <Route
         path="/generos"
@@ -60,6 +62,18 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+
+      <Route
+      path="/dashboard"
+      element={
+      <ProtectedRoute>
+            <MainLayout>
+              <DashboardPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+        />
+
     </Routes>
   );
 }

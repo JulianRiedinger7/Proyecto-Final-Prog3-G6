@@ -2,10 +2,14 @@ import { useEffect, useState } from "react";
 import CalificarEstrellas from "../components/CalificacionStars";
 import ReseniaForm from "../components/ReseniaForm";
 import { useParams } from "react-router-dom";
+import { librosService } from "../services/libro.service";
+import { actualizarResenia } from "../services/detalle.libro.service";
+import type { AxiosResponse } from "axios";
+import type { Libro } from "../types/Libro.type";
 
 export default function DetalleLibro() {
   const { id } = useParams()
-  const libroId = id
+  const libroId : number = Number(id)
 
   const [libro, setLibro] = useState<any>(null);
   const [puntaje, setPuntaje] = useState(0);
@@ -15,12 +19,30 @@ export default function DetalleLibro() {
 
   useEffect(() => {
     const cargarLibro = async () => {
-      const response = await fetch(`http://localhost:3000/api/libros/${libroId}`);
-      const data = await response.json();
+      if (Number.isNaN(libroId))
+      {
+        return <p> No se encontró el ID del libro </p>;
+      }
 
+      const response = await librosService.getLibroPorId(libroId);
+      const data = await response;
+
+      if (!data) {return <p> No hay nada para mostrar </p>; }
       setLibro(data);
-      setPuntaje(data.puntaje);
-      setResenia(data.resenia);
+
+      if (data.puntaje == undefined || Number.isNaN(data.puntaje))
+        {
+          setPuntaje(0);
+        }
+        else {
+        setPuntaje(data.puntaje);
+        }
+
+      if(data.resenia == undefined)
+      {
+        setResenia("Sin reseña");
+      } else {
+      setResenia(data.resenia);}
     };
 
     cargarLibro();
@@ -31,14 +53,10 @@ export default function DetalleLibro() {
       setGuardando(true);
       setMensaje("");
 
-      const response = await fetch(`http://localhost:3000/api/libros/${libroId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ puntaje, resenia }),
-      });
-
-      if (!response.ok) {
-        throw new Error("No se pudo guardar");
+      const response: AxiosResponse<Libro>|undefined = await actualizarResenia(libroId, resenia, puntaje);
+        
+      if (!response || response.status < 200 || response.status >= 300) {
+        throw new Error("No se pudo actualizar");
       }
 
       setMensaje("Guardado correctamente");
@@ -51,7 +69,7 @@ export default function DetalleLibro() {
   };
 
   if (!libro) {
-    return <p>Cargando...</p>;
+    return <p> Cargando...</p>;
   }
 
   return (
