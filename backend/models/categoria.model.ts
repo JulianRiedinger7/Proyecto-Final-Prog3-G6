@@ -14,6 +14,7 @@ import { DataTypes } from "sequelize";
   tableName: "categorias",
   timestamps: true,
 })
+
 export class Categoria extends Model<ICategoria> implements ICategoria {
   @PrimaryKey
   @AutoIncrement
@@ -53,4 +54,18 @@ export class Categoria extends Model<ICategoria> implements ICategoria {
   public static async contar(): Promise<number> {
     return await Categoria.count();
   }
+
+  static async actualizarCategoria(
+      id: number,
+      categoria: Partial<ICategoria>,
+    ): Promise<ICategoria | null> {
+      const categoriaBd: Categoria | null = await Categoria.findByPk(id);
+      let salida: any = null;
+      if (categoriaBd) {
+        await categoriaBd.update(categoria);
+        await categoriaBd.reload();
+        salida = categoriaBd;
+      }
+      return salida;
+    }
 }

@@ -14,8 +14,9 @@ export class UsuariosRouter {
 
     this.router.get("/", usuarioC.getUsuarios);
     this.router.get("/:id", usuarioC.getPorId);
-    this.router.post("/", usuarioC.postUsuario);
     this.router.delete("/:id", usuarioC.deleteUsuario);
+    this.router.post("/register", usuarioC.postRegister);
+    this.router.post("/login", usuarioC.postLogin);
   }
 
   public getRouter(): Router {

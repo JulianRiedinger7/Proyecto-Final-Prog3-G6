@@ -42,6 +42,7 @@ export class LibroSeeder {
       titulo: "Don Quijote de la Mancha",
       autor: "Miguel de Cervantes",
       anio: 1605,
+      portada: "OL6537711",
       generoId: 4,
       estado: EstadoLectura.PorLeer,
     },

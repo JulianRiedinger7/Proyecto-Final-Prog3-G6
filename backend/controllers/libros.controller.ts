@@ -58,7 +58,9 @@ export class LibrosController {
 
     try {
       codigo = 201;
-      salida = await Libro.crear(req.body);
+      salida = await Libro.crear({
+        ...req.body,
+      });
       return res.status(codigo).json(salida);
     } catch (error) {
       next(error);
