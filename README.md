@@ -2,7 +2,8 @@
 
 Proyecto base para el trabajo final de Programacion 3. Es una aplicacion web completa con frontend, backend, base de datos y servicios auxiliares, todo orquestado con Docker Compose.
 
-Link render: https://proyecto-final-prog3-g6.onrender.com/api
+Link Frontend: https://proyecto-final-prog3-g6.vercel.app/
+Link backend: https://proyecto-final-prog3-g6.onrender.com/api
 
 ## 👥 Integrantes - Grupo 6
 
