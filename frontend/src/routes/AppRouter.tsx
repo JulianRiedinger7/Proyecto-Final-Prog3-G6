@@ -8,6 +8,7 @@ import { ProtectedRoute } from "../components/ProtectedRoute";
 import { MainLayout } from "../components/layout/MainLayout";
 import { Register } from "../pages/register";
 import { DashboardPage } from "../pages/dashboard.page";
+import { MejorCalificadosPage } from "../pages/mejorCalificados.page";
 
 export default function AppRouter() {
   return (
@@ -17,7 +18,6 @@ export default function AppRouter() {
       <Route path="/login" element={<Login />} />
 
       <Route path="/registros" element={<Register />} />
-
 
       <Route
         path="/generos"
@@ -64,16 +64,26 @@ export default function AppRouter() {
       />
 
       <Route
-      path="/dashboard"
-      element={
-      <ProtectedRoute>
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
             <MainLayout>
               <DashboardPage />
             </MainLayout>
           </ProtectedRoute>
         }
-        />
+      />
 
+      <Route
+        path="/mejor-calificados"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <MejorCalificadosPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 }
