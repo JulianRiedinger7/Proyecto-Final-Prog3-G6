@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import BookCard from "../components/books/bookcard";
+import {BookCard} from "../components/common/bookCard";
 import { librosService } from "../services/libro.service";
 import { type Libro } from "../types/Libro.type";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+
 
 type Filtro = 'todos' | 'por leer' | 'leyendo' | 'leido';
 
@@ -18,18 +18,7 @@ export function Biblioteca() {
             try {
                 setCargando(true);
                 const datos = await librosService.getLibros();
-
-                const librosConPortada = await Promise.all(
-                    datos.map(async (libro) => {
-                        if (libro.portada) {
-                            const respuesta = await api.get(`/libros/portada/${libro.id}`);
-                            return { ...libro, portada: respuesta.data.portada };
-                        }
-                        return libro;
-                    })
-                );
-
-                setLibros(librosConPortada);
+                setLibros(datos);
             } catch {
                 console.error('Error al cargar libros');
             } finally {
@@ -95,10 +84,7 @@ export function Biblioteca() {
             ) : (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {librosFiltrados.map(libro => (
-                        <BookCard key={libro.id} libro={{
-                            ...libro,
-                            portada: libro.portada ?? ''
-                        }} />
+                        <BookCard key={libro.id} libro={libro} />
                     ))}
                 </div>
             )}
