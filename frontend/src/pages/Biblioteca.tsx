@@ -4,6 +4,7 @@ import BookCard from "../components/books/bookcard";
 import { librosService } from "../services/libro.service";
 import { type Libro } from "../types/Libro.type";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 type Filtro = 'todos' | 'por leer' | 'leyendo' | 'leido';
 
@@ -18,7 +19,18 @@ export function Biblioteca() {
             try {
                 setCargando(true);
                 const datos = await librosService.getLibros();
-                setLibros(datos);
+
+                const librosConPortada = await Promise.all(
+                    datos.map(async (libro) => {
+                        if (libro.portada) {
+                            const respuesta = await api.get(`/libros/portada/${libro.id}`);
+                            return { ...libro, portada: respuesta.data.portada };
+                        }
+                        return libro;
+                    })
+                );
+
+                setLibros(librosConPortada);
             } catch {
                 console.error('Error al cargar libros');
             } finally {
@@ -28,7 +40,6 @@ export function Biblioteca() {
         cargar();
     }, []);
 
-    // Filtra los libros según el filtro activo
     const librosFiltrados = filtro === 'todos'
         ? libros
         : libros.filter(libro => libro.estado === filtro);
@@ -44,7 +55,6 @@ export function Biblioteca() {
         <MainLayout>
             <div className="p-6">
 
-                {/* Header */}
                 <div className="flex justify-between items-center mb-6">
                     <div>
                         <h1 className="font-serif text-3xl font-bold text-text">
@@ -62,7 +72,6 @@ export function Biblioteca() {
                     </button>
                 </div>
 
-                {/* Filtros */}
                 <div className="flex gap-2 mb-6">
                     {filtros.map(({ valor, etiqueta }) => (
                         <button
@@ -79,7 +88,6 @@ export function Biblioteca() {
                     ))}
                 </div>
 
-                {/* Contenido */}
                 {cargando ? (
                     <p className="text-text-light">Cargando libros...</p>
                 ) : librosFiltrados.length === 0 ? (
@@ -90,9 +98,9 @@ export function Biblioteca() {
                     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         {librosFiltrados.map(libro => (
                             <BookCard key={libro.id} libro={{
-                            ...libro,
-                            portada: libro.portada ?? ''
-                        }} />
+                                ...libro,
+                                portada: libro.portada ?? ''
+                            }} />
                         ))}
                     </div>
                 )}
