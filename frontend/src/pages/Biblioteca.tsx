@@ -84,7 +84,13 @@ export function Biblioteca() {
             ) : (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {librosFiltrados.map(libro => (
-                        <BookCard key={libro.id} libro={libro} />
+                        <div
+                            key={libro.id}
+                            onClick={() => navigate(`/libros/${libro.id}`)}
+                            className="cursor-pointer"
+                        >
+                            <BookCard libro={libro} />
+                        </div>
                     ))}
                 </div>
             )}
