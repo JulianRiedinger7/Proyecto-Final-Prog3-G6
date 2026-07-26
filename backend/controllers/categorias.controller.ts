@@ -1,7 +1,6 @@
 import { Categoria } from "../models/categoria.model";
 import { ICategoria } from "../interfaces/categoria.interface";
 import { Request, Response, NextFunction } from "express";
-
 export class CategoriasController {
   public getCategorias = async (
     req: Request,
@@ -9,9 +8,11 @@ export class CategoriasController {
     next: NextFunction,
   ): Promise<Response | void> => {
     try {
-      const categorias: ICategoria[] | [] = await Categoria.traerTodas();
-      if (categorias.length === 0) {
-        return res.status(404).json({ msg: "No se encontraron categorías" });
+      const categorias: ICategoria[] = await Categoria.traerTodas();
+      if (!categorias || categorias.length === 0) {
+        const error = new Error("No hay categorías registradas");
+        error.name = "404-Categorias";
+        throw error;
       }
       return res.status(200).json(categorias);
     } catch (error) {
@@ -28,7 +29,9 @@ export class CategoriasController {
       const { id } = req.params;
       const categoria: ICategoria | null = await Categoria.encontrarPorId(Number(id));
       if (!categoria) {
-        return res.status(404).json({ msg: `No se encontró la categoría con ID ${id}` });
+        const error = new Error(`No se encontró la categoría con ID ${id}`);
+        error.name = "404-IdCategoria";
+        throw error;
       }
       return res.status(200).json(categoria);
     } catch (error) {
@@ -59,9 +62,9 @@ export class CategoriasController {
       const { id } = req.params;
       const categoriaEliminada: ICategoria | null = await Categoria.borrar(Number(id));
       if (!categoriaEliminada) {
-        return res
-          .status(404)
-          .json({ msg: `No se encontró la categoría con ID ${id} para eliminar` });
+        const error = new Error(`No se encontró la categoría con ID ${id} para eliminar`);
+        error.name = "404-IdCategoria";
+        throw error;
       }
       return res.status(200).json({
         msg: `Categoría con ID ${id} eliminada exitosamente`,
@@ -71,4 +74,23 @@ export class CategoriasController {
       next(error);
     }
   };
+
+   public putCategoria = async (
+      req: Request,
+      res: Response,
+      next: NextFunction,
+    ): Promise<Response | void> => {
+      try {
+        const categoriaActualizada = await Categoria.actualizarCategoria(Number(req.params.id), req.body);
+        if (!categoriaActualizada) {
+          const error = new Error(`No se encontró la categoría con ID ${req.params.id}`);
+          error.name = "404-IdCategoria";
+          throw error;
+        }
+        return res.status(200).json(categoriaActualizada);
+      } catch (error) {
+        next(error);
+      }
+    };
+  
 }
