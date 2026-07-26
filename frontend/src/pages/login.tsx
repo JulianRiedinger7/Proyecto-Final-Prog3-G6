@@ -65,7 +65,7 @@ export const Login = () => {
 
       <p className="text-sm text-text-light mt-4">
         ¿No tenés cuenta?{" "}
-        <Link to="/register" className="text-primary font-medium hover:underline">
+        <Link to="/registros" className="text-primary font-medium hover:underline">
           Registrate
         </Link>
       </p>
