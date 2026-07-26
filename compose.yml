@@ -8,14 +8,15 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGPORT: ${DB_PORT}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:${DB_PORT}"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U app_user -d app_database"]
+      test: ["CMD-SHELL", "pg_isready -U app_user -d app_database -p ${DB_PORT}"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -38,7 +39,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       CORS_ORIGIN: ${CORS_ORIGIN}
     ports:
-      - "3001:3001"
+      - "${PORT}:${PORT}"
       - "9229:9229" # Puerto para debugging
     volumes:
       - ./backend:/app
