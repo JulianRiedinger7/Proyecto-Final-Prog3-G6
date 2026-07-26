@@ -295,6 +295,31 @@ C. Documentación (Docs) Si la tarea consiste en generar o modificar documentaci
 
 ## Documentación Técnica
 
+
+## Variables de entorno (.env)
+> **IMPORTANTE**  
+A fin de cumplimentar con lo requerido en los criterios de 
+aprobación se establecieron valores por defecto en caso de no encontrar las correspondientes variables en el .env. Esta practica se desaconseja fuera del entorno academico.  
+Es por ello que marcamos como obligatoria el establecimiento de las mismas.
+
+| Variable | Descripción | Valor por defecto | Obligatoria |
+|---|---|---|---|
+| `POSTGRES_DB` | Nombre de la base de datos | `app_database` | Si |
+| `POSTGRES_USER` | Usuario root de la base de datos | `app_user` | Si |
+| `POSTGRES_PASSWORD` | Contraseña de root | `app_password` | Si |
+| **Variables del Entorno del Backend** | 
+| `NODE_ENV` | Entorno de Node del Backend | `development` | Si |
+| `PORT` | Puerto del Backend | `3001` | Si |
+| `DB_PORT` | Puerto de la base de datos | `5432` | Si |
+| `DB_USER` | Usuario de la base de datos | `app_user` | Si |
+| `DB_PASSWORD` | Contraseña del usuario de la base de datos | `app_password` | Si |
+| `JWT_SECRET` | Secreto para validar JWT | `UHJ1ZWJhYmFja2VuZFNlY3JldEpXVAo=` | Si |
+| `CORS_ORIGIN` | URI Frontend | `http://localhost:5173` | Si |
+| **Variables del Entorno del Frontend** | 
+| `VITE_API_URL` | Nombre de la base de datos | `http://localhost:3001/api` | Si |
+
+
+
 ## Arquitectura General
 
 ```
@@ -312,15 +337,14 @@ C. Documentación (Docs) Si la tarea consiste en generar o modificar documentaci
                    └─────────────┘
 ```
 
-Todos los servicios corren dentro de contenedores Docker y se comunican a traves de una red interna (`app_network`). Caddy actua como reverse proxy: recibe todo el trafico en el puerto 80 y lo redirige al frontend o al backend segun la URL.
+Todos los servicios corren dentro de contenedores Docker y se comunican a traves de una red interna (`app_network`). Para el caso del FrontEnd se utiliza Nginx como reverse proxy.
 
 | Servicio     | Tecnologia                       | Puerto | Funcion                        |
 | ------------ | -------------------------------- | ------ | ------------------------------ |
-| **Frontend** | React 18                         | 3000   | Interfaz de usuario            |
+| **Frontend** | React 18                         | 5173   | Interfaz de usuario            |
 | **Backend**  | Express + TypeScript + Sequelize | 3001   | API REST                       |
 | **Database** | PostgreSQL 15                    | 5432   | Base de datos relacional       |
-| **Proxy**    | Caddy 2                          | 80     | Reverse proxy                  |
-| **pgAdmin**  | pgAdmin 4                        | 5050   | Administracion visual de la BD |
+
 
 ---
 
@@ -331,6 +355,8 @@ Todos los servicios corren dentro de contenedores Docker y se comunican a traves
 - [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/) instalados.
 
 ### Levantar el proyecto
+> **IMPORTANTE**  
+Se recomienda la configuracion del .env correspondiente en la raiz del proyecto
 
 ```bash
 # Construir las imagenes (solo la primera vez o cuando cambien dependencias)
@@ -344,11 +370,10 @@ Una vez que todo este corriendo, podes acceder a:
 
 | Recurso          | URL                       |
 | ---------------- | ------------------------- |
-| Frontend (React) | http://localhost:3000     |
+| Frontend (React) | http://localhost:5173     |
 | Backend API      | http://localhost:3001/api |
-| Proxy (Caddy)    | http://localhost          |
-| pgAdmin          | http://localhost:5050     |
-
+  
+  
 > **Tip:** Si queres correrlo en segundo plano, usa `docker-compose up -d`. Para ver los logs: `docker-compose logs -f`.
 
 ### Detener el proyecto
@@ -365,57 +390,185 @@ docker-compose down -v
 
 ## Estructura del Proyecto
 
-```
-proyecto/
-├── docker-compose.yml              # Orquestacion de todos los servicios
-├── .gitignore
+```tree
+.
+├── API_test.md
+├── compose.yml
+├── package.json
+├── pnpm-lock.yaml
 ├── README.md
-│
 ├── backend/
-│   ├── Dockerfile.dev               # Imagen Docker para desarrollo
+│   ├── Dockerfile
+│   ├── Dockerfile.dev
+│   ├── app.ts
+│   ├── jest.config.cjs
 │   ├── package.json
-│   ├── app.ts                    # Punto de entrada del servidor Express
+│   ├── pnpm-lock.yaml
+│   ├── tsconfig.json
+│   ├── assets/
+│   │   └── entidad-relacion.png
 │   ├── config/
-│   │   └── database.ts              # Config de conexion a PostgreSQL
-│   ├── models/
-│   │   ├── index.ts                 # Inicializa Sequelize y registra modelos
-│   │   ├── categoria.model.ts
-│   │   ├── estadisticas.model.ts
-│   │   ├── usuario.model.ts
-│   │   └── libro.model.ts
+│   │   └── database.ts
 │   ├── controllers/
+│   │   ├── calificaciones.libros.controller.test.ts
 │   │   ├── calificaciones.libros.controller.ts
+│   │   ├── categorias.controller.test.ts
 │   │   ├── categorias.controller.ts
 │   │   ├── estadisticas.controller.ts
+│   │   ├── estado.libro.controller.test.ts
 │   │   ├── estado.libro.controller.ts
-│   │   ├── usuarios.controller.ts
-│   │   └── libros.controller.ts
+│   │   ├── libros.controller.test.ts
+│   │   ├── libros.controller.ts
+│   │   ├── usuarios.controller.test.ts
+│   │   └── usuarios.controller.ts
+│   ├── core/
+│   │   └── server.ts
+│   ├── interfaces/
+│   │   ├── Estadistica.interface.ts
+│   │   ├── Libro.interface.ts
+│   │   ├── Usuario.interface.ts
+│   │   ├── categoria.interface.ts
+│   │   └── dbConfig.interface.ts
 │   ├── middleware/
-│   │   ├── error-handler.middleware.js
+│   │   ├── auth.middleware.test.ts
+│   │   ├── auth.middleware.ts
+│   │   ├── error-auth.test.ts
+│   │   ├── error-auth.ts
+│   │   ├── error-categorias-handler.middleware.test.ts
 │   │   ├── error-categorias-handler.middleware.ts
-│   │   ├── error-usuarios-handler.middleware.ts
-|   |   └── error-libros-handler.middleware.ts
+│   │   ├── error-handler.middleware.ts
+│   │   ├── error-libros-handler.middleware.test.ts
+│   │   ├── error-libros-handler.middleware.ts
+│   │   └── error-usuarios-handler.middleware.ts
+│   ├── models/
+│   │   ├── categoria.model.test.ts
+│   │   ├── categoria.model.ts
+│   │   ├── index.ts
+│   │   ├── libro.model.test.ts
+│   │   ├── libro.model.ts
+│   │   └── usuario.model.ts
 │   ├── routes/
-│   │   ├── index.routes.ts          # Router principal
 │   │   ├── categorias.routes.ts
-│   │   ├── usuarios.routes.ts
-│   │   └── libros.routes.ts
-│   ├── seeders/                     # Datos de prueba
-│   │   ├── 20260614-seeder-usuarios.ts
-│   │   ├── 20260605145618-categoria.ts
-|   |   └── 20260606-seeder-libro.ts
-│   ├── core/                     # Contenedor del Core de la API
-|   |   └── server.ts
-│   └── interfaces/
-│       ├── dbConfig.interface.ts
-│       ├── categoria.interface.ts
-│       ├── Estadistica.interface.ts
-│       ├── Libro.interface.ts
-│       └── Usuario.interface.ts
-│
+│   │   ├── index.routes.test.ts
+│   │   ├── index.routes.ts
+│   │   ├── libros.routes.test.ts
+│   │   ├── libros.routes.ts
+│   │   └── usuarios.routes.ts
+│   ├── seeders/
+│   │   ├── 20260605145618-categorias.ts
+│   │   ├── 20260606-seeder-libro.ts
+│   │   └── 20260614-seeder-usuarios.ts
+│   └── utils/
+│       └── estadisticas.util.ts
 └── frontend/
-    └── TODO
-
+    ├── Dockerfile
+    ├── eslint.config.js
+    ├── index.html
+    ├── nginx.conf
+    ├── package.json
+    ├── pnpm-lock.yaml
+    ├── pnpm-workspace.yaml
+    ├── README.md
+    ├── tailwind.config.ts
+    ├── tsconfig.app.json
+    ├── tsconfig.json
+    ├── tsconfig.node.json
+    └── vite.config.ts
+    ├── public/
+    │   ├── book-cover-placeholder.png
+    │   ├── favicon.svg
+    │   └── icons.svg
+    └── src/
+        ├── App.css
+        ├── App.tsx
+        ├── index.css
+        ├── main.tsx
+        ├── assets/
+        │   ├── hero.png
+        │   ├── react.svg
+        │   └── vite.svg
+        ├── components/
+        │   ├── CalificacionStars.tsx
+        │   ├── LibroInfo.tsx
+        │   ├── ProtectedRoute.tsx
+        │   ├── ReseniaForm.tsx
+        │   ├── books/
+        │   │   └── bookcard.tsx
+        │   ├── common/
+        │   │   ├── Error.mensaje.test.tsx
+        │   │   ├── Error.mensaje.tsx
+        │   │   ├── Estado.selector.test.tsx
+        │   │   ├── Estado.selector.tsx
+        │   │   ├── Genero.agregar.test.tsx
+        │   │   ├── Genero.agregar.tsx
+        │   │   ├── Genero.dropdown.test.tsx
+        │   │   ├── Genero.dropdown.tsx
+        │   │   ├── Genero.lista.test.tsx
+        │   │   ├── Genero.lista.tsx
+        │   │   ├── Genero.titulo.tsx
+        │   │   ├── GeneroItem.lista.test.tsx
+        │   │   ├── GeneroItem.lista.tsx
+        │   │   ├── bookCard.test.tsx
+        │   │   ├── bookCard.tsx
+        │   │   ├── generoPill.test.tsx
+        │   │   ├── generoPill.tsx
+        │   │   ├── statsCard.test.tsx
+        │   │   └── statsCard.tsx
+        │   ├── layout/
+        │   │   ├── MainLayout.tsx
+        │   │   ├── Navbar.tsx
+        │   │   └── Sidebar.tsx
+        │   └── ui/
+        │       ├── Boton.atras.test.tsx
+        │       ├── Boton.atras.tsx
+        │       ├── Boton.generico.test.tsx
+        │       ├── Boton.generico.tsx
+        │       ├── Boton.lista.test.tsx
+        │       ├── Boton.lista.tsx
+        │       ├── Icono.lista.test.tsx
+        │       ├── Icono.lista.tsx
+        │       ├── InputEdicion.lista.test.tsx
+        │       └── InputEdicion.lista.tsx
+        ├── context/
+        │   └── AuthContext.tsx
+        ├── hooks/
+        │   └── useAuth.ts
+        ├── pages/
+        │   ├── AnadirLibro.test.tsx
+        │   ├── AnadirLibro.tsx
+        │   ├── Biblioteca.test.tsx
+        │   ├── Biblioteca.tsx
+        │   ├── DetalleLibro.tsx
+        │   ├── GestionGenero.pages.test.tsx
+        │   ├── GestionGenero.pages.tsx
+        │   ├── dashboard.page.tsx
+        │   ├── dashboard.pages.test.tsx
+        │   ├── login.tsx
+        │   ├── mejorCalificados.page.tsx
+        │   ├── mejorCalificados.pages.test.tsx
+        │   └── register.tsx
+        ├── routes/
+        │   └── AppRouter.tsx
+        ├── services/
+        │   ├── api.ts
+        │   ├── authService.ts
+        │   ├── detalleLibroService.ts
+        │   ├── estadisticas.service.ts
+        │   ├── genero.service.ts
+        │   └── libro.service.ts
+        ├── tests/
+        │   ├── api.test.ts
+        │   ├── authContext.test.tsx
+        │   ├── authService.test.ts
+        │   ├── biblioteca.test.ts
+        │   ├── protectedRoute.test.tsx
+        │   ├── setup.ts
+        │   └── useAuth.test.tsx
+        └── types/
+            ├── Estadisticas.type.ts
+            ├── Genero.type.ts
+            ├── Libro.type.ts
+            └── Respuesta.type.ts
 ```
 
 ## Diagrama Entidad-Relacion
