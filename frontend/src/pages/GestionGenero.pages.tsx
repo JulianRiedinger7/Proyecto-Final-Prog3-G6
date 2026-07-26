@@ -77,7 +77,7 @@ export function GestionGenero () {
     }
 
     return (
-        <div className="flex flex-col w-min gap-10 bg-secondary">
+        <div className="flex flex-col w-min gap-10">
             <div>
                 <GeneroTitulo/>
             </div>
