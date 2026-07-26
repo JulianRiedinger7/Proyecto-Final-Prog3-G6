@@ -25,7 +25,7 @@ export function AnadirLibro() {
     };
 
     const handleGuardar = async () => {
-        // Validaciones básicas
+        
         if (!form.titulo.trim()) {
             setError('El título es obligatorio');
             return;
@@ -48,9 +48,9 @@ export function AnadirLibro() {
     };
 
     return (
-        <div className="max-w-xl mx-auto py-8 px-4">
+        
+        <div className="py-8 px-4">
 
-            {/* Header */}
             <button
                 onClick={() => navigate('/biblioteca')}
                 className="text-primary text-sm mb-6 flex items-center gap-1 hover:underline"
@@ -58,6 +58,7 @@ export function AnadirLibro() {
                 ← Volver a Biblioteca
             </button>
 
+            <div className="max-w-xl mx-auto">
             <h1 className="font-serif text-3xl font-bold text-text mb-1">
                 Añadir Libro
             </h1>
@@ -133,7 +134,7 @@ export function AnadirLibro() {
                         onChange={(estado) => handleChange('estado', estado)}
                     />
                 </div>
-
+                
                 {/* Error */}
                 {error && (
                     <p className="text-red-500 text-sm">{error}</p>
@@ -150,5 +151,7 @@ export function AnadirLibro() {
 
             </div>
         </div>
+        </div>
+        
     );
 }
