@@ -20,7 +20,9 @@ export default function AppRouter() {
         path="/generos"
         element={
           <ProtectedRoute>
+            <MainLayout>
               <GestionGenero />
+            </MainLayout>
           </ProtectedRoute>
         }
       />
@@ -29,7 +31,9 @@ export default function AppRouter() {
         path="/biblioteca"
         element={
           <ProtectedRoute>
+            <MainLayout>
               <Biblioteca />
+            </MainLayout>
           </ProtectedRoute>
         }
       />
@@ -38,7 +42,9 @@ export default function AppRouter() {
         path="/anadir"
         element={
           <ProtectedRoute>
+            <MainLayout>
               <AnadirLibro />
+            </MainLayout>
           </ProtectedRoute>
         }
       />
