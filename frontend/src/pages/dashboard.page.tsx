@@ -1,17 +1,14 @@
-import { obtenerEstadisticas, obtenerLibrosLeyendo } from "../services/estadisticas.service";
+import { obtenerLibrosLeyendo } from "../services/estadisticas.service";
 import { generoService } from "../services/genero.service";
 import { useEffect, useState } from "react";
-import type { Estadisticas } from "../types/Estadisticas.type";
 import type { Libro } from "../types/Libro.type";
 import type { Genero } from "../types/Genero.type";
-import { StatsCard } from "../components/common/statsCard";
 import { BookCard } from "../components/common/bookCard";
 import { Link } from "react-router-dom";
 import { GeneroPill } from "../components/common/generoPill";
 import { useAuth } from "../hooks/useAuth";
 
 export const DashboardPage = () => {
-  const [estadisticas, setEstadisticas] = useState<Estadisticas | null>(null);
   const [libros, setLibros] = useState<Libro[]>([]);
   const [generos, setGeneros] = useState<Genero[]>([]);
   const [generoSeleccionado, setGeneroSeleccionado] = useState<number>(0);
@@ -20,12 +17,10 @@ export const DashboardPage = () => {
   useEffect(() => {
     const fetchDatos = async () => {
       try {
-        const [estadisticasData, librosData, generosData] = await Promise.all([
-          obtenerEstadisticas(),
+        const [librosData, generosData] = await Promise.all([
           obtenerLibrosLeyendo(),
           generoService.obtenerGeneros(),
         ]);
-        setEstadisticas(estadisticasData);
         setLibros(librosData);
         setGeneros(generosData);
       } catch (error) {
@@ -55,15 +50,6 @@ export const DashboardPage = () => {
         )}
         !
       </h1>
-      {estadisticas ? (
-        <div className="flex flex-col justify-center items-center md:flex-row">
-          <StatsCard titulo="Total Libros" valor={estadisticas.TotalLibros} />
-          <StatsCard titulo="Leyendo" valor={estadisticas.LibrosLeyendo} />
-          <StatsCard titulo="Leidos" valor={estadisticas.LibrosLeidos} />
-        </div>
-      ) : (
-        <p>Cargando estadísticas...</p>
-      )}
 
       {libros.length > 0 ? (
         <div>
