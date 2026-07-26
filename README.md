@@ -20,6 +20,7 @@ Link render: https://proyecto-final-prog3-g6.onrender.com/api
 #### Alejandro Lucas Baldres
 
 _Backend_
+
 - Interfaces:
   1. Libro-interface: _Solo InterfaceLibro_
   2. dbConfig-interface
@@ -58,6 +59,7 @@ _Backend_
   1. APIT_test.md
 
 _Frontend_
+
 - Componentes:
   1. common/Genero.agregar
   2. common/GeneroItem.lista
@@ -70,7 +72,6 @@ _Frontend_
   9. common/Error.mensaje
   10. ui/Boton.lista
 
-
 - Paginas:
   1. GestionGenero.pages
 
@@ -82,20 +83,20 @@ _Frontend_
   2. Respuesta.type
 
 - Test Unitarios
- 1. Error.mensaje.test
- 2. Genero.agregar.test
- 3. Genero.lista.test
- 4. GeneroItem.lista.test
- 5. Boton.atras.test
- 6. Boton.generico.test
- 7. Boton.lista.test
- 8. InputEdicion.lista.test
- 9. GestionGenero.pages.test
+
+1.  Error.mensaje.test
+2.  Genero.agregar.test
+3.  Genero.lista.test
+4.  GeneroItem.lista.test
+5.  Boton.atras.test
+6.  Boton.generico.test
+7.  Boton.lista.test
+8.  InputEdicion.lista.test
+9.  GestionGenero.pages.test
 
 - CI/CD:
   1. Dockerfiles
   2. docker-compose
-
 
 #### Marianela Belardinelli
 
@@ -157,6 +158,7 @@ _Backend (JWT)_
   - Las rutas de /api/usuarios (register, login, y el resto) quedan sin authMiddleware, ya que register/login son necesariamente públicas para poder obtener el token
 
 _Tests Unitarios Backend:_
+
 - Test del controlador de calificaciones: calificaciones.libros.controller.test.ts
 - Test del controlador de usuarios (register y login): usuarios.controller.test.ts
 - Test del middleware de autenticación: auth.middleware.test.ts
@@ -222,11 +224,10 @@ _Frontend_
   1. dashboard.page.tsx — carga de estadísticas, libros y géneros en paralelo con Promise.all, filtrado por género en memoria
   2. mejorCalificados.page.tsx
 - Componentes (components/common/):
-  1. statsCard.tsx
-  2. generoPill.tsx
-  3. bookCard.tsx
+  1. generoPill.tsx
+  2. bookCard.tsx
 - Utilidades:
-  1. utils/getPortada.util.ts — construcción de URL de portada desde Open Library con manejo de imagen inválida
+  1. services/libro.service.ts/obtenerPortadaUrl — construcción de URL de portada desde Open Library
 - Servicios:
   1. services/estadisticas.service.ts
 
@@ -236,9 +237,8 @@ _Tests Unitarios Frontend_
   1. dashboard.page.test.tsx
   2. mejorCalificados.page.test.tsx
 - Test de componentes:
-  1. components/common/statsCard.test.tsx
-  2. components/common/generoPill.test.tsx
-  3. components/common/bookCard.test.tsx
+  1. components/common/generoPill.test.tsx
+  2. components/common/bookCard.test.tsx
 
 #### Clara Zivano
 
@@ -295,30 +295,28 @@ C. Documentación (Docs) Si la tarea consiste en generar o modificar documentaci
 
 ## Documentación Técnica
 
-
 ## Variables de entorno (.env)
+
 > **IMPORTANTE**  
-A fin de cumplimentar con lo requerido en los criterios de 
-aprobación se establecieron valores por defecto en caso de no encontrar las correspondientes variables en el .env. Esta practica se desaconseja fuera del entorno academico.  
-Es por ello que marcamos como obligatoria el establecimiento de las mismas.
+> A fin de cumplimentar con lo requerido en los criterios de
+> aprobación se establecieron valores por defecto en caso de no encontrar las correspondientes variables en el .env. Esta practica se desaconseja fuera del entorno academico.  
+> Es por ello que marcamos como obligatoria el establecimiento de las mismas.
 
-| Variable | Descripción | Valor por defecto | Obligatoria |
-|---|---|---|---|
-| `POSTGRES_DB` | Nombre de la base de datos | `app_database` | Si |
-| `POSTGRES_USER` | Usuario root de la base de datos | `app_user` | Si |
-| `POSTGRES_PASSWORD` | Contraseña de root | `app_password` | Si |
-| **Variables del Entorno del Backend** | 
-| `NODE_ENV` | Entorno de Node del Backend | `development` | Si |
-| `PORT` | Puerto del Backend | `3001` | Si |
-| `DB_PORT` | Puerto de la base de datos | `5432` | Si |
-| `DB_USER` | Usuario de la base de datos | `app_user` | Si |
-| `DB_PASSWORD` | Contraseña del usuario de la base de datos | `app_password` | Si |
-| `JWT_SECRET` | Secreto para validar JWT | `UHJ1ZWJhYmFja2VuZFNlY3JldEpXVAo=` | Si |
-| `CORS_ORIGIN` | URI Frontend | `http://localhost:5173` | Si |
-| **Variables del Entorno del Frontend** | 
-| `VITE_API_URL` | Nombre de la base de datos | `http://localhost:3001/api` | Si |
-
-
+| Variable                               | Descripción                                | Valor por defecto                  | Obligatoria |
+| -------------------------------------- | ------------------------------------------ | ---------------------------------- | ----------- |
+| `POSTGRES_DB`                          | Nombre de la base de datos                 | `app_database`                     | Si          |
+| `POSTGRES_USER`                        | Usuario root de la base de datos           | `app_user`                         | Si          |
+| `POSTGRES_PASSWORD`                    | Contraseña de root                         | `app_password`                     | Si          |
+| **Variables del Entorno del Backend**  |
+| `NODE_ENV`                             | Entorno de Node del Backend                | `development`                      | Si          |
+| `PORT`                                 | Puerto del Backend                         | `3001`                             | Si          |
+| `DB_PORT`                              | Puerto de la base de datos                 | `5432`                             | Si          |
+| `DB_USER`                              | Usuario de la base de datos                | `app_user`                         | Si          |
+| `DB_PASSWORD`                          | Contraseña del usuario de la base de datos | `app_password`                     | Si          |
+| `JWT_SECRET`                           | Secreto para validar JWT                   | `UHJ1ZWJhYmFja2VuZFNlY3JldEpXVAo=` | Si          |
+| `CORS_ORIGIN`                          | URI Frontend                               | `http://localhost:5173`            | Si          |
+| **Variables del Entorno del Frontend** |
+| `VITE_API_URL`                         | Nombre de la base de datos                 | `http://localhost:3001/api`        | Si          |
 
 ## Arquitectura General
 
@@ -339,12 +337,11 @@ Es por ello que marcamos como obligatoria el establecimiento de las mismas.
 
 Todos los servicios corren dentro de contenedores Docker y se comunican a traves de una red interna (`app_network`). Para el caso del FrontEnd se utiliza Nginx como reverse proxy.
 
-| Servicio     | Tecnologia                       | Puerto | Funcion                        |
-| ------------ | -------------------------------- | ------ | ------------------------------ |
-| **Frontend** | React 18                        | 5173   | Interfaz de usuario            |
-| **Backend**  | Express + TypeScript + Sequelize | 3001   | API REST                       |
-| **Database** | PostgreSQL 15                    | 5432   | Base de datos relacional       |
-
+| Servicio     | Tecnologia                       | Puerto | Funcion                  |
+| ------------ | -------------------------------- | ------ | ------------------------ |
+| **Frontend** | React 18                         | 5173   | Interfaz de usuario      |
+| **Backend**  | Express + TypeScript + Sequelize | 3001   | API REST                 |
+| **Database** | PostgreSQL 15                    | 5432   | Base de datos relacional |
 
 ---
 
@@ -355,8 +352,9 @@ Todos los servicios corren dentro de contenedores Docker y se comunican a traves
 - [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/) instalados.
 
 ### Levantar el proyecto
+
 > **IMPORTANTE**  
-Se recomienda la configuracion del .env correspondiente en la raiz del proyecto
+> Se recomienda la configuracion del .env correspondiente en la raiz del proyecto
 
 ```bash
 # Construir las imagenes (solo la primera vez o cuando cambien dependencias)
@@ -372,8 +370,7 @@ Una vez que todo este corriendo, podes acceder a:
 | ---------------- | ------------------------- |
 | Frontend (React) | http://localhost:5173     |
 | Backend API      | http://localhost:3001/api |
-  
-  
+
 > **Tip:** Si queres correrlo en segundo plano, usa `docker-compose up -d`. Para ver los logs: `docker-compose logs -f`.
 
 ### Detener el proyecto
@@ -586,11 +583,11 @@ docker-compose down -v
 - **[CORS](https://github.com/expressjs/cors)** — Configuracion de Cross-Origin Resource Sharing
 
 ### Frontend
+
 - **[React](https://es.react.dev/)** - Libreria de interfaz de usuario
 - **[Vite](https://vite.dev/)** - DevTool para react
 - **[TypeScript](https://www.typescriptlang.org/)** — JS Tipado
 - **[Tailwindcss](https://tailwindcss.com/)** - CSS Framework
-
 
 ### Infraestructura
 
