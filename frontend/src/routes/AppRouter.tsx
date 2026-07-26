@@ -3,6 +3,7 @@ import { Login } from "../pages/login";
 import { GestionGenero } from "../pages/GestionGenero.pages";
 import { Biblioteca } from "../pages/Biblioteca";
 import { AnadirLibro } from "../pages/AnadirLibro";
+import DetalleLibro from "../pages/DetalleLibro";
 import { ProtectedRoute } from "../components/ProtectedRoute";
 import { MainLayout } from "../components/layout/MainLayout";
 import { Register } from "../pages/register";
@@ -10,7 +11,7 @@ import { Register } from "../pages/register";
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/generos" replace />} />
+      <Route path="/" element={<Navigate to="/biblioteca" replace />} />
 
       <Route path="/login" element={<Login />} />
 
@@ -44,6 +45,17 @@ export default function AppRouter() {
           <ProtectedRoute>
             <MainLayout>
               <AnadirLibro />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/libros/:id"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <DetalleLibro />
             </MainLayout>
           </ProtectedRoute>
         }
