@@ -341,7 +341,7 @@ Todos los servicios corren dentro de contenedores Docker y se comunican a traves
 
 | Servicio     | Tecnologia                       | Puerto | Funcion                        |
 | ------------ | -------------------------------- | ------ | ------------------------------ |
-| **Frontend** | React 18                         | 5173   | Interfaz de usuario            |
+| **Frontend** | React 18                        | 5173   | Interfaz de usuario            |
 | **Backend**  | Express + TypeScript + Sequelize | 3001   | API REST                       |
 | **Database** | PostgreSQL 15                    | 5432   | Base de datos relacional       |
 
@@ -582,10 +582,19 @@ docker-compose down -v
 - **[Express](https://expressjs.com/)** — Framework web para Node.js
 - **[Sequelize](https://sequelize.org/)** — ORM para bases de datos SQL
 - **[TypeScript](https://www.typescriptlang.org/)** — JS Tipado
-- **[cors](https://github.com/expressjs/cors)** — Configuracion de Cross-Origin Resource Sharing
+- **[Jest](https://jestjs.io/)** - Herramienta de Test para JS
+- **[CORS](https://github.com/expressjs/cors)** — Configuracion de Cross-Origin Resource Sharing
+
+### Frontend
+- **[React](https://es.react.dev/)** - Libreria de interfaz de usuario
+- **[Vite](https://vite.dev/)** - DevTool para react
+- **[TypeScript](https://www.typescriptlang.org/)** — JS Tipado
+- **[Tailwindcss](https://tailwindcss.com/)** - CSS Framework
+
 
 ### Infraestructura
 
 - **[Docker](https://docs.docker.com/)** — Contenedores
 - **[Docker Compose](https://docs.docker.com/compose/)** — Orquestacion multi-contenedor
 - **[PostgreSQL 15](https://www.postgresql.org/docs/15/)** — Base de datos relacional
+- **[NGINX](https://nginx.org/)** - Proxy Inverso
