@@ -73,19 +73,33 @@ export default function DetalleLibro() {
   }
 
   return (
-    <div>
-      <h1>{libro.titulo}</h1>
-      <h2>{libro.autor}</h2>
+    <div className="py-8 px-4">
+      <div className="max-w-2xl mx-auto bg-blanco rounded-xl shadow p-6 flex flex-col gap-5">
+        <div>
+          <h1 className="font-serif text-3xl font-bold text-text mb-1">{libro.titulo}</h1>
+          <p className="text-text-light text-sm">{libro.autor}</p>
+        </div>
 
-      <CalificarEstrellas puntaje={puntaje} onChange={setPuntaje} />
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-text">Tu calificación</label>
+          <CalificarEstrellas puntaje={puntaje} onChange={setPuntaje} />
+        </div>
 
-      <ReseniaForm resenia={resenia} onChange={setResenia} />
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-text">Tu reseña</label>
+          <ReseniaForm resenia={resenia} onChange={setResenia} />
+        </div>
 
-      <button onClick={guardarCambios} disabled={guardando}>
-        {guardando ? "Guardando..." : "Guardar cambios"}
-      </button>
+        <button
+          onClick={guardarCambios}
+          disabled={guardando}
+          className="w-full h-12 bg-primary text-blanco rounded-lg font-medium hover:bg-primary-hover transition-colors disabled:opacity-50 cursor-pointer"
+        >
+          {guardando ? "Guardando..." : "Guardar cambios"}
+        </button>
 
-      {mensaje && <p>{mensaje}</p>}
+        {mensaje && <p className={`text-sm ${mensaje.includes("error") ? "text-red-500" : "text-primary"}`}>{mensaje}</p>}
+      </div>
     </div>
   );
 }
